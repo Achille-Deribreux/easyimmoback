@@ -4,8 +4,6 @@ import com.easyimmo.reservation.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
-public interface ReservationRepository
-        //extends JpaRepository<Integer, Reservation>
-{
+@Repository
+public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
 }
