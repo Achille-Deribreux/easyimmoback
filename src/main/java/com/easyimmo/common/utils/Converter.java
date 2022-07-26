@@ -2,12 +2,17 @@ package com.easyimmo.common.utils;
 
 import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.model.Fee;
+import com.easyimmo.fees.service.FeeService;
 import com.easyimmo.incomes.dto.IncomeDto;
 import com.easyimmo.incomes.model.Income;
+import com.easyimmo.incomes.service.IncomeService;
 import com.easyimmo.property.dto.PropertyDto;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.easyimmo.reservation.dto.ReservationBody;
+import com.easyimmo.reservation.dto.ReservationDetails;
+import com.easyimmo.reservation.dto.ReservationSummary;
+import com.easyimmo.reservation.model.Reservation;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,10 +21,17 @@ import java.util.stream.Collectors;
 @Component
 public class Converter {
 
-    @Autowired
     private PropertyService propertyService;
 
-    public Converter() {
+    private FeeService feeService;
+
+    private IncomeService incomeService;
+
+
+    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService) {
+        this.propertyService = propertyService;
+        this.feeService = feeService;
+        this.incomeService = incomeService;
     }
 
     public Fee convert(FeeDto feeDto){
@@ -97,5 +109,39 @@ public class Converter {
 
     public List<IncomeDto> convertIncomeList(List<Income> incomeList){
         return incomeList.stream().map(this::convert).collect(Collectors.toList());
+    }
+
+    public ReservationDetails convertToReservationDetails(Reservation reservation){
+        return new ReservationDetails()
+                .id(reservation.getId())
+                .reservationDate(reservation.getReservationDate())
+                .fromDate(reservation.getFromDate())
+                .toDate(reservation.getToDate())
+                .property(convert(reservation.getProperty()))
+                .income(convert(reservation.getIncome()))
+                .feeList(convertFeeList(reservation.getFeeList()));
+    }
+
+    public ReservationSummary convertToReservationSummary(Reservation reservation){
+        return new ReservationSummary()
+                .id(reservation.getId())
+                .fromDate(reservation.getFromDate())
+                .toDate(reservation.getToDate())
+                .propertyId(reservation.getProperty().getId());
+    }
+
+    public Reservation convert(ReservationBody reservationBody){
+        List<Fee> feeList = null;
+        if(reservationBody.getFeeIdList()!=null && !reservationBody.getFeeIdList().isEmpty()){
+            feeList = reservationBody.getFeeIdList().stream().map(id -> feeService.getFeeById(id)).collect(Collectors.toList());
+        }
+        return new Reservation()
+                .id(reservationBody.getId())
+                .reservationDate(reservationBody.getReservationDate())
+                .fromDate(reservationBody.getFromDate())
+                .toDate(reservationBody.getToDate())
+                .property(propertyService.getById(reservationBody.getPropertyId()))
+                .income(incomeService.getIncomeById(reservationBody.getIncomeId()))
+                .feeList(feeList);
     }
 }

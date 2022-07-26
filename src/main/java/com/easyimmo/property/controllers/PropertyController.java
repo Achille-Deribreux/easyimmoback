@@ -84,6 +84,7 @@ public class PropertyController {
     @DeleteMapping(value = "/deleteById")
     public ResponseEntity<String> deletePropertyById(@RequestParam(value = "id") Integer id){
         logger.info("delete request received at : /property/deleteById for id : {}", id);
+        propertyService.deleteById(id);
         return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
     }
 
