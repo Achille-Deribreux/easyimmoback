@@ -27,4 +27,10 @@ public class ExceptionsHandler {
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
         return new ResponseEntity<>(customErrorResponse,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ReservationNotFoundException.class)
+    public ResponseEntity<Object>handleReservationNotFoundException(ReservationNotFoundException e){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
+        return new ResponseEntity<>(customErrorResponse,HttpStatus.NOT_FOUND);
+    }
 }
