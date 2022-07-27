@@ -2,8 +2,10 @@ package com.easyimmo.reservation.controllers;
 
 import com.easyimmo.common.utils.Converter;
 import com.easyimmo.reservation.dto.ReservationBody;
+import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
+import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,12 +53,18 @@ public class ReservationController {
     @RequestMapping(value="/getAll")
     public ResponseEntity<List<ReservationSummary>> getAllReservations(
             @RequestParam(value = "propertyId",required=false)Integer propertyId,
-            @RequestParam(value = "fromDate",required=false)String fromDate,
-            @RequestParam(value = "toDate",required=false)String toDate,
-            @RequestParam(value = "reservationDate",required=false)String reservationDate
+            @RequestParam(value = "fromDate",required=false) LocalDate fromDate,
+            @RequestParam(value = "toDate",required=false)LocalDate toDate,
+            @RequestParam(value = "reservationDate",required=false)LocalDate reservationDate
     ) {
         logger.info("get request received at reservation/getAll");
-        return new ResponseEntity<>(reservationService.getAll().stream().map(converter::convertToReservationSummary).collect(Collectors.toList()), HttpStatus.OK);
+        ReservationCriteria criteria = new ReservationCriteria()
+                .propertyId(propertyId)
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .reservationDate(reservationDate);
+        List<Reservation> reservationsList = reservationService.getAll(criteria);
+        return new ResponseEntity<>(converter.convertListToReservationSummary(reservationsList), HttpStatus.OK);
     }
 
     /**

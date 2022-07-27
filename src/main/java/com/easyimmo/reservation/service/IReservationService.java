@@ -1,5 +1,6 @@
 package com.easyimmo.reservation.service;
 
+import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.model.Reservation;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface IReservationService {
      * This method search for all the properties
      * @return list of all the properties
      */
-    List<Reservation> getAll();
+    List<Reservation> getAll(ReservationCriteria criteria);
 
     /**
      * This method allows you to update a reservation

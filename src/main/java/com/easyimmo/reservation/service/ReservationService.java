@@ -1,6 +1,7 @@
 package com.easyimmo.reservation.service;
 
 import com.easyimmo.common.exception.ReservationNotFoundException;
+import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.UpdateReservationHelper;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.repository.ReservationRepository;
@@ -28,9 +29,9 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public List<Reservation> getAll() {
-        logger.info("get all from repository");
-        return reservationRepository.findAll();
+    public List<Reservation> getAll(ReservationCriteria criteria) {
+        logger.info("get all from repository with criteria {}",criteria);
+        return reservationRepository.findReservationByMultipleCriteria(criteria);
     }
 
     @Override

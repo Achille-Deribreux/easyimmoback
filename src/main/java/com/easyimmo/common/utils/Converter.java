@@ -144,4 +144,8 @@ public class Converter {
                 .income(incomeService.getIncomeById(reservationBody.getIncomeId()))
                 .feeList(feeList);
     }
+
+    public List<ReservationSummary> convertListToReservationSummary(List<Reservation> reservationList){
+        return reservationList.stream().map(this::convertToReservationSummary).collect(Collectors.toList());
+    }
 }
