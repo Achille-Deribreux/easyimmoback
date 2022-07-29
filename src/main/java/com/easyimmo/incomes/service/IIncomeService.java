@@ -3,6 +3,7 @@ package com.easyimmo.incomes.service;
 import com.easyimmo.incomes.dto.IncomeCriteria;
 import com.easyimmo.incomes.model.Income;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IIncomeService {
@@ -16,4 +17,6 @@ public interface IIncomeService {
     Income updateIncome(Integer id,Income income);
 
     void deleteById(Integer id);
+
+    Integer getTotalIncomesFrom(Integer propertyId, LocalDate fromDate);
 }

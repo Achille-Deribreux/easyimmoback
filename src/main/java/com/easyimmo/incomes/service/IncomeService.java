@@ -1,6 +1,8 @@
 package com.easyimmo.incomes.service;
 
 import com.easyimmo.common.exception.IncomeNotFoundException;
+import com.easyimmo.fees.dto.FeeCriteria;
+import com.easyimmo.fees.model.Fee;
 import com.easyimmo.incomes.dto.IncomeCriteria;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.repository.IncomeRepository;
@@ -8,6 +10,7 @@ import com.easyimmo.incomes.util.UpdateIncomeHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -46,5 +49,17 @@ public class IncomeService implements IIncomeService{
     public void deleteById(Integer id) {
         Income incomeToDelete = getIncomeById(id);
         incomeRepository.delete(incomeToDelete);
+    }
+
+    @Override
+    public Integer getTotalIncomesFrom(Integer propertyId, LocalDate fromDate) {
+        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).minDate(fromDate);
+        List<Income> incomeList =incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);
+        return incomeList.stream().mapToInt(Income::getAmount).sum();
+    }
+
+    public List<Income> getLastIncomes(Integer propertyId, Integer nbIncomes) {
+        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes);
+        return incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);
     }
 }

@@ -15,6 +15,7 @@ public class IncomeCriteria {
     private LocalDate maxDate;
     private Integer propertyId;
     private Income.IncomeType type;
+    private Integer pageSize;
 
     public IncomeCriteria() {
     }
@@ -38,12 +39,22 @@ public class IncomeCriteria {
         this.propertyName = propertyName;
     }
 
+    public IncomeCriteria propertyName(String propertyName){
+        setPropertyName(propertyName);
+        return this;
+    }
+
     public Integer getMinAmount() {
         return minAmount;
     }
 
     public void setMinAmount(Integer minAmount) {
         this.minAmount = minAmount;
+    }
+
+    public IncomeCriteria minAmount(Integer amount){
+        setMinAmount(amount);
+        return this;
     }
 
     public Integer getMaxAmount() {
@@ -54,12 +65,22 @@ public class IncomeCriteria {
         this.maxAmount = maxAmount;
     }
 
+    public IncomeCriteria maxAmount(Integer amount){
+        setMaxAmount(amount);
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public IncomeCriteria description(String description){
+        setDescription(description);
+        return this;
     }
 
     public LocalDate getMinDate() {
@@ -70,12 +91,22 @@ public class IncomeCriteria {
         this.minDate = minDate;
     }
 
+    public IncomeCriteria minDate(LocalDate date){
+        setMinDate(date);
+        return this;
+    }
+
     public LocalDate getMaxDate() {
         return maxDate;
     }
 
     public void setMaxDate(LocalDate maxDate) {
         this.maxDate = maxDate;
+    }
+
+    public IncomeCriteria maxDate(LocalDate date){
+        setMaxDate(date);
+        return this;
     }
 
     public Integer getPropertyId() {
@@ -86,12 +117,35 @@ public class IncomeCriteria {
         this.propertyId = propertyId;
     }
 
+    public IncomeCriteria propertyId(Integer propertyId){
+        setPropertyId(propertyId);
+        return this;
+    }
+
     public Income.IncomeType getType() {
         return type;
     }
 
     public void setType(Income.IncomeType type) {
         this.type = type;
+    }
+
+    public IncomeCriteria type(Income.IncomeType type){
+        setType(type);
+        return this;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public IncomeCriteria pageSize(Integer pageSize){
+        setPageSize(pageSize);
+        return this;
     }
 
     @Override

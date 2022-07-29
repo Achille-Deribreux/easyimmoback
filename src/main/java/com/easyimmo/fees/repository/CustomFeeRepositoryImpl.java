@@ -7,6 +7,7 @@ import com.easyimmo.property.model.Property;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,12 @@ public class CustomFeeRepositoryImpl implements CustomFeeRepository{
         .add(feeCriteria.getPropertyName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyJoin.get("name"))),toLike(feeCriteria.getPropertyName())))
         .add(feeCriteria.getPropertyId()!=null,()->criteriaBuilder.equal((propertyJoin.get("id")),feeCriteria.getPropertyId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
-
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        criteriaQuery.orderBy(criteriaBuilder.desc(feeRoot.get("date")));
+        TypedQuery<Fee> typedQuery = entityManager.createQuery(criteriaQuery);
+        if(feeCriteria.getPageSize()!=null){
+            typedQuery.setMaxResults(feeCriteria.getPageSize());
+        }
+        return typedQuery.getResultList();
     }
 
     private String toLike(String value){

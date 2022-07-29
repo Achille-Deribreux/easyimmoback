@@ -12,6 +12,7 @@ public class FeeCriteria {
     private LocalDate minDate;
     private LocalDate maxDate;
     private Integer propertyId;
+    private Integer pageSize;
 
     public FeeCriteria() {
     }
@@ -117,6 +118,19 @@ public class FeeCriteria {
 
     public FeeCriteria propertyId(Integer propertyId){
         setPropertyId(propertyId);
+        return this;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public FeeCriteria pageSize(Integer pageSize){
+        setPageSize(pageSize);
         return this;
     }
 }

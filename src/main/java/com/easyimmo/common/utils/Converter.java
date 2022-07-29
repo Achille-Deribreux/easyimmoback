@@ -20,6 +20,7 @@ import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,14 @@ public class Converter {
         );
     }
 
+    public FeeSummary convertToSummary(Fee fee) {
+        return new FeeSummary()
+                .id(fee.getId())
+                .date(fee.getDate())
+                .amount(fee.getAmount())
+                .supplier(fee.getSupplier());
+    }
+
      public Property convert(PropertyDto propertyDto){
         return new Property(
                 propertyDto.getId(),
@@ -100,12 +109,12 @@ public class Converter {
                 .rentType(property.getRentType().toString())
                 .buyPrice(property.getBuyPrice())
                 .bankLoanSummary(new BankLoanSummary())
-                .yearlyFees(1)
-                .yearlyIncomes(1)
-                .monthlyFees(1)
-                .monthlyIncomes(1)
-                .fees(List.of(new FeeSummary()))
-                .incomes(List.of(new IncomeSummary()))
+                .yearlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusYears(1)))
+                .yearlyIncomes(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusYears(1)))
+                .monthlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusMonths(1)))
+                .monthlyIncomes(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusMonths(1)))
+                .fees(convertToFeeSummaryList(feeService.getLastFees(property.getId(),5)))
+                .incomes(convertToSummaryList(incomeService.getLastIncomes(property.getId(), 5)))
                 .reservations(List.of(new ReservationSummary()));
     }
 
@@ -130,6 +139,20 @@ public class Converter {
         );
     }
 
+    public IncomeSummary convertToSummary(Income income){
+        return new IncomeSummary()
+                .id(income.getId())
+                .description(income.getDescription())
+                .amount(income.getAmount())
+                .date(income.getDate());
+    }
+
+    public List<IncomeSummary> convertToSummaryList(List<Income> incomes){
+        return incomes.stream()
+                .map(this::convertToSummary)
+                .collect(Collectors.toList());
+    }
+
     public List<PropertySummary>convertPropertyList(List<Property> propertyList){
         return propertyList.stream().map(this::convertToSummary).collect(Collectors.toList());
     }
@@ -140,6 +163,12 @@ public class Converter {
 
     public List<IncomeDto> convertIncomeList(List<Income> incomeList){
         return incomeList.stream().map(this::convert).collect(Collectors.toList());
+    }
+
+    public List<FeeSummary> convertToFeeSummaryList( List<Fee> fees){
+        return fees.stream()
+                .map(this::convertToSummary)
+                .collect(Collectors.toList());
     }
 
     public ReservationDetails convertToReservationDetails(Reservation reservation){

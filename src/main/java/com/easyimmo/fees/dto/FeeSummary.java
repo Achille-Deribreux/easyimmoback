@@ -58,7 +58,7 @@ public class FeeSummary {
         this.supplier = supplier;
     }
 
-    public FeeSummary description(String description) {
+    public FeeSummary supplier(String description) {
         this.supplier = description;
         return this;
     }
