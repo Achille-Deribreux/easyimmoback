@@ -1,12 +1,17 @@
 package com.easyimmo.common.utils;
 
+import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.fees.dto.FeeDto;
+import com.easyimmo.fees.dto.FeeSummary;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.service.FeeService;
 import com.easyimmo.incomes.dto.IncomeDto;
+import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.service.IncomeService;
+import com.easyimmo.property.dto.PropertyDetails;
 import com.easyimmo.property.dto.PropertyDto;
+import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationBody;
@@ -78,6 +83,32 @@ public class Converter {
         );
     }
 
+    public PropertySummary convertToSummary(Property property){
+        return new PropertySummary()
+                .id(property.getId())
+                .address(property.getAddress())
+                .name(property.getName())
+                .type(property.getType());
+    }
+
+    public PropertyDetails convertToDetails (Property property){
+        return new PropertyDetails()
+                .id(property.getId())
+                .address(property.getAddress())
+                .name(property.getName())
+                .type(property.getType().toString())
+                .rentType(property.getRentType().toString())
+                .buyPrice(property.getBuyPrice())
+                .bankLoanSummary(new BankLoanSummary())
+                .yearlyFees(1)
+                .yearlyIncomes(1)
+                .monthlyFees(1)
+                .monthlyIncomes(1)
+                .fees(List.of(new FeeSummary()))
+                .incomes(List.of(new IncomeSummary()))
+                .reservations(List.of(new ReservationSummary()));
+    }
+
     public IncomeDto convert(Income income){
         return new IncomeDto(
                 income.getId(),
@@ -99,8 +130,8 @@ public class Converter {
         );
     }
 
-    public List<PropertyDto>convertPropertyList(List<Property> propertyList){
-        return propertyList.stream().map(this::convert).collect(Collectors.toList());
+    public List<PropertySummary>convertPropertyList(List<Property> propertyList){
+        return propertyList.stream().map(this::convertToSummary).collect(Collectors.toList());
     }
 
     public List<FeeDto> convertFeeList(List<Fee> feeList){
@@ -127,7 +158,7 @@ public class Converter {
                 .id(reservation.getId())
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
-                .propertyId(reservation.getProperty().getId());
+                .propertyName(reservation.getProperty().getName());
     }
 
     public Reservation convert(ReservationBody reservationBody){

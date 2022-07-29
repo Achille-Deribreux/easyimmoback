@@ -8,7 +8,8 @@ public class ReservationSummary {
     private Integer id;
     private LocalDate fromDate;
     private LocalDate toDate;
-    private Integer propertyId;
+    private String propertyName;
+    private Integer price;
 
     public ReservationSummary() {
     }
@@ -52,16 +53,29 @@ public class ReservationSummary {
         return this;
     }
 
-    public Integer getPropertyId() {
-        return propertyId;
+    public String getPropertyName() {
+        return propertyName;
     }
 
-    public void setPropertyId(Integer propertyId) {
-        this.propertyId = propertyId;
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
-    public ReservationSummary propertyId (Integer propertyId) {
-        this.propertyId = propertyId;
+    public ReservationSummary propertyName (String propertyName) {
+        this.propertyName = propertyName;
+        return this;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public ReservationSummary price (Integer price) {
+        this.price = price;
         return this;
     }
 
@@ -71,20 +85,8 @@ public class ReservationSummary {
                 "id=" + id +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
-                ", propertyId=" + propertyId +
+                ", propertyName='" + propertyName + '\'' +
+                ", price=" + price +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ReservationSummary that = (ReservationSummary) o;
-        return Objects.equals(id, that.id) && Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate) && Objects.equals(propertyId, that.propertyId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, fromDate, toDate, propertyId);
     }
 }

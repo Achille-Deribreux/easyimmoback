@@ -2,7 +2,9 @@ package com.easyimmo.property.controllers;
 
 import com.easyimmo.common.utils.Converter;
 import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.dto.PropertyDetails;
 import com.easyimmo.property.dto.PropertyDto;
+import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import org.slf4j.Logger;
@@ -34,9 +36,9 @@ public class PropertyController {
      * @return response entity with the wanted property and status code 200 if everything is ok
      */
     @GetMapping(value="/getById")
-    public ResponseEntity<PropertyDto> getPropertyById(@RequestParam(value="id") Integer id){
+    public ResponseEntity<PropertyDetails> getPropertyById(@RequestParam(value="id") Integer id){
         logger.info("get request received at property/getById for id : {}", id);
-        return new ResponseEntity<>(converter.convert(propertyService.getById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToDetails(propertyService.getById(id)), HttpStatus.OK);
     }
 
     /**
@@ -44,7 +46,7 @@ public class PropertyController {
      * @return a list of all the properties and status code 200 if everything is ok
      */
     @GetMapping(value="/getAll")
-    public ResponseEntity<List<PropertyDto>> getAllProperties(
+    public ResponseEntity<List<PropertySummary>> getAllProperties(
             @RequestParam(value = "type",required=false)Property.Type type,
             @RequestParam(value = "rentType",required=false)Property.RentType rentType,
             @RequestParam(value = "name",required=false)String name,
