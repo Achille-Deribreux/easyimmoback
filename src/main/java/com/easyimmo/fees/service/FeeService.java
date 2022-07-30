@@ -55,6 +55,7 @@ public class FeeService implements IFeeService{
         return feeList.stream().mapToInt(Fee::getAmount).sum();
     }
 
+    @Override
     public List<Fee> getLastFees(Integer propertyId, Integer nbFees) {
         FeeCriteria feeCriteria = new FeeCriteria().propertyId(propertyId).pageSize(nbFees);
         return feeRepository.findFeeByMultipleCriteria(feeCriteria);

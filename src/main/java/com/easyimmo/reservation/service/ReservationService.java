@@ -56,6 +56,7 @@ public class ReservationService implements IReservationService {
         reservationRepository.delete(reservationToDelete);
     }
 
+    @Override
     public List<Reservation> getLastReservations(Integer propertyId, Integer nbReservations) {
         ReservationCriteria reservationCriteria = new ReservationCriteria().propertyId(propertyId).pageSize(nbReservations);
         return reservationRepository.findReservationByMultipleCriteria(reservationCriteria);

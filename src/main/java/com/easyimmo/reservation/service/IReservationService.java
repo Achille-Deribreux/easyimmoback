@@ -39,4 +39,6 @@ public interface IReservationService {
      * @param id of the reservation that you want to delete
      */
     void deleteById(Integer id);
+
+    List<Reservation> getLastReservations(Integer propertyId, Integer nbReservations);
 }

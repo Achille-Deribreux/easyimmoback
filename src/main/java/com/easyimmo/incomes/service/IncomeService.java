@@ -58,6 +58,7 @@ public class IncomeService implements IIncomeService{
         return incomeList.stream().mapToInt(Income::getAmount).sum();
     }
 
+    @Override
     public List<Income> getLastIncomes(Integer propertyId, Integer nbIncomes) {
         IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes);
         return incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);

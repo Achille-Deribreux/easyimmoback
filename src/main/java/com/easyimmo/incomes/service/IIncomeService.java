@@ -19,4 +19,6 @@ public interface IIncomeService {
     void deleteById(Integer id);
 
     Integer getTotalIncomesFrom(Integer propertyId, LocalDate fromDate);
+
+    List<Income> getLastIncomes(Integer propertyId, Integer nbIncomes);
 }

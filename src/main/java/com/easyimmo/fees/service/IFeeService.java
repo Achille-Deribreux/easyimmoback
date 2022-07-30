@@ -20,4 +20,6 @@ public interface IFeeService {
     void deleteById(Integer id);
 
     Integer getTotalFeesFrom(Integer propertyId, LocalDate fromDate);
+
+    List<Fee> getLastFees(Integer propertyId, Integer nbFees);
 }
