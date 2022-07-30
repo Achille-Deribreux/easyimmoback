@@ -6,6 +6,7 @@ import com.easyimmo.reservation.model.Reservation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -29,7 +30,10 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
         conditionalList.add(reservationCriteria.getPropertyId()!=null,()->criteriaBuilder.equal(reservationRoot.get("propertyId"),reservationCriteria.getPropertyId()));
         //TODO: add other criteria
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
-
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("startDate")));
+        TypedQuery<Reservation> typedQuery = entityManager.createQuery(criteriaQuery);
+        if(reservationCriteria.getPageSize()!=null && reservationCriteria.getPageNumber()!=null)
+            typedQuery.setMaxResults(reservationCriteria.getPageSize()).setFirstResult(reservationCriteria.getPageNumber() * reservationCriteria.getPageSize());
+        return typedQuery.getResultList();
     }
 }
