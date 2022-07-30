@@ -27,10 +27,10 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
 
         Root<Reservation> reservationRoot = criteriaQuery.from(Reservation.class);
         BasicUtils.ConditionalList<Predicate> conditionalList = BasicUtils.ConditionalList.of(new ArrayList<>());
-        conditionalList.add(reservationCriteria.getPropertyId()!=null,()->criteriaBuilder.equal(reservationRoot.get("propertyId"),reservationCriteria.getPropertyId()));
+        //conditionalList.add(reservationCriteria.getPropertyId()!=null,()->criteriaBuilder.equal(reservationRoot.get("property_id"),reservationCriteria.getPropertyId()));
         //TODO: add other criteria
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
-        criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("startDate")));
+        criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("fromDate")));
         TypedQuery<Reservation> typedQuery = entityManager.createQuery(criteriaQuery);
         if(reservationCriteria.getPageSize()!=null && reservationCriteria.getPageNumber()!=null)
             typedQuery.setMaxResults(reservationCriteria.getPageSize()).setFirstResult(reservationCriteria.getPageNumber() * reservationCriteria.getPageSize());
