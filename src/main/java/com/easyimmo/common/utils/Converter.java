@@ -91,6 +91,22 @@ public class Converter {
     /**
      * PROPERTY CONVERTERS
      */
+
+    //EnumMapper
+    private static final EnumMapper<String, Property.Type> propertyTypeMap = new EnumMapper<>();
+    static {
+        propertyTypeMap.add("APPARTMENT", Property.Type.APPARTMENT);
+        propertyTypeMap.add("HOUSE", Property.Type.HOUSE);
+    }
+
+    private static final EnumMapper<String, Property.RentType> propertyRentTypeMap = new EnumMapper<>();
+    static {
+        propertyRentTypeMap.add("SHORT_RENT", Property.RentType.SHORT);
+        propertyRentTypeMap.add("LONG_RENT", Property.RentType.LONG);
+    }
+
+
+
      public Property convert(PropertyDto propertyDto){
         return new Property(
                 propertyDto.getId(),
@@ -126,8 +142,8 @@ public class Converter {
                 .id(property.getId())
                 .address(property.getAddress())
                 .name(property.getName())
-                .type(property.getType().toString())
-                .rentType(property.getRentType().toString())
+                .type(propertyTypeMap.toFront(property.getType()))
+                .rentType(propertyRentTypeMap.toFront(property.getRentType()))
                 .buyPrice(property.getBuyPrice())
                 .bankLoanSummary(new BankLoanSummary())
                 .yearlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusYears(1)))
