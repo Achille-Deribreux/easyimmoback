@@ -24,7 +24,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedOrigin("https://easy-immo-front.herokuapp.com/");
         config.addAllowedHeader("*");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
