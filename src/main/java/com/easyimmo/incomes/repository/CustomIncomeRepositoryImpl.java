@@ -7,6 +7,7 @@ import com.easyimmo.property.model.Property;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,12 @@ public class CustomIncomeRepositoryImpl implements CustomIncomeRepository{
                 .add(incomeCriteria.getPropertyId()!=null,()->criteriaBuilder.equal((propertyJoin.get("id")),incomeCriteria.getPropertyId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
 
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        criteriaQuery.orderBy(criteriaBuilder.desc(incomeRoot.get("date")));
+        TypedQuery<Income> query = entityManager.createQuery(criteriaQuery);
+        if(incomeCriteria.getPageSize()!=null && incomeCriteria.getPageNumber()!=null){
+            query.setMaxResults(incomeCriteria.getPageSize()).setFirstResult(incomeCriteria.getPageNumber() * incomeCriteria.getPageSize());
+        }
+        return query.getResultList();
     }
 
     private String toLike(String value){

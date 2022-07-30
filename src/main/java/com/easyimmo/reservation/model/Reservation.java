@@ -72,12 +72,22 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
+    public Reservation reservationDate(LocalDate reservationDate){
+        setReservationDate(reservationDate);
+        return this;
+    }
+
     public LocalDate getFromDate() {
         return fromDate;
     }
 
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
+    }
+
+    public Reservation fromDate(LocalDate fromDate){
+        setFromDate(fromDate);
+        return this;
     }
 
     public LocalDate getToDate() {
@@ -88,12 +98,22 @@ public class Reservation {
         this.toDate = toDate;
     }
 
+    public Reservation toDate(LocalDate toDate){
+        setToDate(toDate);
+        return this;
+    }
+
     public Property getProperty() {
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Reservation property(Property property){
+        setProperty(property);
+        return this;
     }
 
     public Income getIncome() {
@@ -104,12 +124,22 @@ public class Reservation {
         this.income = income;
     }
 
+    public Reservation income(Income income){
+        setIncome(income);
+        return this;
+    }
+
     public List<Fee> getFeeList() {
         return feeList;
     }
 
     public void setFeeList(List<Fee> feeList) {
         this.feeList = feeList;
+    }
+
+    public Reservation feeList(List<Fee> feeList){
+        setFeeList(feeList);
+        return this;
     }
 
     @Override

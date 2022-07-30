@@ -58,10 +58,22 @@ public class IncomeController {
             @RequestParam(value = "maxAmount", required = false)Integer maxAmount,
             @RequestParam(value = "description", required = false)String description,
             @RequestParam(value="minDate",required=false) LocalDate minDate,
-            @RequestParam(value="maxDate",required=false) LocalDate maxDate
+            @RequestParam(value="maxDate",required=false) LocalDate maxDate,
+            @RequestParam(value="pageNr",required=false)Integer pageNr,
+            @RequestParam(value="pageSize",required=false)Integer pageSize
             ){
         logger.info("get request received at /income/getAll");
-        IncomeCriteria incomeCriteria = new IncomeCriteria(propertyName,minAmount,maxAmount,description,minDate,maxDate, propertyId,type);
+        IncomeCriteria incomeCriteria = new IncomeCriteria()
+                .type(type)
+                .propertyId(propertyId)
+                .propertyName(propertyName)
+                .minAmount(minAmount)
+                .maxAmount(maxAmount)
+                .description(description)
+                .minDate(minDate)
+                .maxDate(maxDate)
+                .pageNumber(pageNr)
+                .pageSize(pageSize);
         List<Income> allIncomeList = incomeService.getAllIncomes(incomeCriteria);
         if(allIncomeList.isEmpty())
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

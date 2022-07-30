@@ -6,6 +6,7 @@ import com.easyimmo.property.model.Property;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -31,8 +32,12 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository{
         .add(propertyCriteria.getHighPrice()!=null,()->criteriaBuilder.lessThanOrEqualTo(propertyRoot.get("buyPrice"),propertyCriteria.getHighPrice()))
         .add(propertyCriteria.getName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyRoot.get("name"))),toLike(propertyCriteria.getName())));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
-        
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        criteriaQuery.orderBy(criteriaBuilder.desc(propertyRoot.get("buyPrice")));
+        TypedQuery<Property> query = entityManager.createQuery(criteriaQuery);
+
+        if(propertyCriteria.getPageSize()!=null && propertyCriteria.getPageNumber()!=null)
+            query.setMaxResults(propertyCriteria.getPageSize()).setFirstResult(propertyCriteria.getPageNumber() * propertyCriteria.getPageSize());
+        return query.getResultList();
     }
 
     private String toLike(String value){
