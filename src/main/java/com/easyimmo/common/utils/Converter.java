@@ -44,6 +44,9 @@ public class Converter {
         this.reservationService = reservationService;
     }
 
+    /**
+     * FEES CONVERTERS
+     */
     public Fee convert(FeeDto feeDto){
         return new Fee(
                 feeDto.getId(),
@@ -74,6 +77,20 @@ public class Converter {
                 .supplier(fee.getSupplier());
     }
 
+    public List<FeeDto> convertFeeList(List<Fee> feeList){
+        return feeList.stream().map(this::convert).collect(Collectors.toList());
+    }
+
+    public List<FeeSummary> convertToFeeSummaryList( List<Fee> fees){
+        return fees.stream()
+                .map(this::convertToSummary)
+                .collect(Collectors.toList());
+    }
+
+
+    /**
+     * PROPERTY CONVERTERS
+     */
      public Property convert(PropertyDto propertyDto){
         return new Property(
                 propertyDto.getId(),
@@ -122,6 +139,13 @@ public class Converter {
                 .reservations(convertListToReservationSummary(reservationService.getLastReservations(property.getId(), 5)));
     }
 
+    public List<PropertySummary>convertPropertyList(List<Property> propertyList){
+        return propertyList.stream().map(this::convertToSummary).collect(Collectors.toList());
+    }
+
+    /**
+     * INCOMES CONVERTERS
+     */
     public IncomeDto convert(Income income){
         return new IncomeDto(
                 income.getId(),
@@ -157,24 +181,15 @@ public class Converter {
                 .collect(Collectors.toList());
     }
 
-    public List<PropertySummary>convertPropertyList(List<Property> propertyList){
-        return propertyList.stream().map(this::convertToSummary).collect(Collectors.toList());
-    }
-
-    public List<FeeDto> convertFeeList(List<Fee> feeList){
-        return feeList.stream().map(this::convert).collect(Collectors.toList());
-    }
-
     public List<IncomeDto> convertIncomeList(List<Income> incomeList){
         return incomeList.stream().map(this::convert).collect(Collectors.toList());
     }
 
-    public List<FeeSummary> convertToFeeSummaryList( List<Fee> fees){
-        return fees.stream()
-                .map(this::convertToSummary)
-                .collect(Collectors.toList());
-    }
 
+
+    /**
+     * RESERVATIONS CONVERTERS
+     */
     public ReservationDetails convertToReservationDetails(Reservation reservation){
         return new ReservationDetails()
                 .id(reservation.getId())
@@ -194,7 +209,7 @@ public class Converter {
                 .propertyName(reservation.getProperty().getName());
     }
 
-    public Reservation convert(ReservationBody reservationBody){
+    public Reservation convertToReservationBody(ReservationBody reservationBody){
         List<Fee> feeList = null;
         if(reservationBody.getFeeIdList()!=null && !reservationBody.getFeeIdList().isEmpty()){
             feeList = reservationBody.getFeeIdList().stream().map(id -> feeService.getFeeById(id)).collect(Collectors.toList());
