@@ -8,6 +8,7 @@ public class ReservationCriteria {
     private LocalDate fromDate;
     private LocalDate toDate;
     private LocalDate reservationDate;
+    private Integer pageSize;
 
     public ReservationCriteria() {
     }
@@ -61,6 +62,19 @@ public class ReservationCriteria {
 
     public ReservationCriteria reservationDate(LocalDate reservationDate) {
         this.reservationDate = reservationDate;
+        return this;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public ReservationCriteria pageSize(Integer pageSize) {
+        this.pageSize = pageSize;
         return this;
     }
 

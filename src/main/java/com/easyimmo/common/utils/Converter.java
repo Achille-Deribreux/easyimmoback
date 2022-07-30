@@ -18,6 +18,7 @@ import com.easyimmo.reservation.dto.ReservationBody;
 import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
+import com.easyimmo.reservation.service.ReservationService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -33,11 +34,14 @@ public class Converter {
 
     private IncomeService incomeService;
 
+    private ReservationService reservationService;
 
-    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService) {
+
+    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService , ReservationService reservationService) {
         this.propertyService = propertyService;
         this.feeService = feeService;
         this.incomeService = incomeService;
+        this.reservationService = reservationService;
     }
 
     public Fee convert(FeeDto feeDto){
@@ -115,7 +119,7 @@ public class Converter {
                 .monthlyIncomes(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusMonths(1)))
                 .fees(convertToFeeSummaryList(feeService.getLastFees(property.getId(),5)))
                 .incomes(convertToSummaryList(incomeService.getLastIncomes(property.getId(), 5)))
-                .reservations(List.of(new ReservationSummary()));
+                .reservations(convertListToReservationSummary(reservationService.getLastReservations(property.getId(), 5)));
     }
 
     public IncomeDto convert(Income income){
