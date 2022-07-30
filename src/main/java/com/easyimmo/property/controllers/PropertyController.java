@@ -51,7 +51,9 @@ public class PropertyController {
             @RequestParam(value = "rentType",required=false)Property.RentType rentType,
             @RequestParam(value = "name",required=false)String name,
             @RequestParam(value = "minPrice",required=false)Integer minPrice,
-            @RequestParam(value = "maxPrice",required=false)Integer maxPrice
+            @RequestParam(value = "maxPrice",required=false)Integer maxPrice,
+          @RequestParam(value="pageNr",required=false)Integer pageNr,
+            @RequestParam(value="pageSize",required=false)Integer pageSize
     ){
         logger.info("get request received at /property/getAll");
         PropertyCriteria propertyCriteria = new PropertyCriteria()
@@ -59,7 +61,9 @@ public class PropertyController {
                 .type(type)
                 .name(name)
                 .lowPrice(minPrice)
-                .highPrice(maxPrice);
+                .highPrice(maxPrice)
+                .pageNumber(pageNr)
+                .pageSize(pageSize);
         List<Property> result = propertyService.getAll(propertyCriteria);
         if (result.isEmpty()){
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

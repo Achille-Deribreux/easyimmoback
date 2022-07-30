@@ -58,7 +58,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public List<Reservation> getLastReservations(Integer propertyId, Integer nbReservations) {
-        ReservationCriteria reservationCriteria = new ReservationCriteria().propertyId(propertyId).pageSize(nbReservations);
+        ReservationCriteria reservationCriteria = new ReservationCriteria().propertyId(propertyId).pageSize(nbReservations).pageNumber(1);
         return reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
     }
 }

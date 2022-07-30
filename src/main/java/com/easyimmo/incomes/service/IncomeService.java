@@ -60,7 +60,7 @@ public class IncomeService implements IIncomeService{
 
     @Override
     public List<Income> getLastIncomes(Integer propertyId, Integer nbIncomes) {
-        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes);
+        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes).pageNumber(1);
         return incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);
     }
 }

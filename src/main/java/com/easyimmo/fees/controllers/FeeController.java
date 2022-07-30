@@ -55,7 +55,9 @@ public class FeeController {
             @RequestParam(value="minAmount",required=false)Integer minAmount,
             @RequestParam(value="maxAmount",required=false)Integer maxAmount,
             @RequestParam(value="minDate",required=false) LocalDate minDate,
-            @RequestParam(value="maxDate",required=false) LocalDate maxDate
+            @RequestParam(value="maxDate",required=false) LocalDate maxDate,
+            @RequestParam(value="pageNr",required=false)Integer pageNr,
+            @RequestParam(value="pageSize",required=false)Integer pageSize
     ){
         FeeCriteria feeCriteria = new FeeCriteria()
                 .propertyName(propertyName)
@@ -65,7 +67,9 @@ public class FeeController {
                 .minAmount(minAmount)
                 .maxAmount(maxAmount)
                 .minDate(minDate)
-                .maxaDate(maxDate);
+                .maxaDate(maxDate)
+                .pageSize(pageSize)
+                .pageNumber(pageNr);
 
         List<Fee> result = feeService.getAllFees(feeCriteria);
         if (result.isEmpty()){

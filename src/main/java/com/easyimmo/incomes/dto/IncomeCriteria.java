@@ -3,7 +3,6 @@ package com.easyimmo.incomes.dto;
 import com.easyimmo.incomes.model.Income;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class IncomeCriteria {
 
@@ -16,19 +15,9 @@ public class IncomeCriteria {
     private Integer propertyId;
     private Income.IncomeType type;
     private Integer pageSize;
+    private Integer pageNumber;
 
     public IncomeCriteria() {
-    }
-
-    public IncomeCriteria(String propertyName, Integer minAmount, Integer maxAmount, String description, LocalDate minDate, LocalDate maxDate, Integer propertyId, Income.IncomeType type) {
-        this.propertyName = propertyName;
-        this.minAmount = minAmount;
-        this.maxAmount = maxAmount;
-        this.description = description;
-        this.minDate = minDate;
-        this.maxDate = maxDate;
-        this.propertyId = propertyId;
-        this.type = type;
     }
 
     public String getPropertyName() {
@@ -148,16 +137,16 @@ public class IncomeCriteria {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        IncomeCriteria that = (IncomeCriteria) o;
-        return Objects.equals(propertyName, that.propertyName) && Objects.equals(minAmount, that.minAmount) && Objects.equals(maxAmount, that.maxAmount) && Objects.equals(description, that.description) && Objects.equals(minDate, that.minDate) && Objects.equals(maxDate, that.maxDate) && Objects.equals(propertyId, that.propertyId) && type == that.type;
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(propertyName, minAmount, maxAmount, description, minDate, maxDate, propertyId, type);
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public IncomeCriteria pageNumber(Integer pageNumber){
+        setPageNumber(pageNumber);
+        return this;
     }
 }

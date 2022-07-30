@@ -36,8 +36,8 @@ public class CustomIncomeRepositoryImpl implements CustomIncomeRepository{
 
         criteriaQuery.orderBy(criteriaBuilder.desc(incomeRoot.get("date")));
         TypedQuery<Income> query = entityManager.createQuery(criteriaQuery);
-        if(incomeCriteria.getPageSize()!=null){
-            query.setMaxResults(incomeCriteria.getPageSize());
+        if(incomeCriteria.getPageSize()!=null && incomeCriteria.getPageNumber()!=null){
+            query.setMaxResults(incomeCriteria.getPageSize()).setFirstResult(incomeCriteria.getPageNumber() * incomeCriteria.getPageSize());
         }
         return query.getResultList();
     }

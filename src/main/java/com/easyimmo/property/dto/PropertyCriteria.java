@@ -9,6 +9,8 @@ public class PropertyCriteria {
     private String name;
     private Integer lowPrice;
     private Integer highPrice;
+    private Integer pageSize;
+    private Integer pageNumber;
 
     public PropertyCriteria() {
     }
@@ -76,6 +78,32 @@ public class PropertyCriteria {
 
     public PropertyCriteria highPrice(Integer highPrice){
         setHighPrice(highPrice);
+        return this;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public PropertyCriteria pageSize(Integer pageSize){
+        setPageSize(pageSize);
+        return this;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public PropertyCriteria pageNumber(Integer pageNumber){
+        setPageNumber(pageNumber);
         return this;
     }
 

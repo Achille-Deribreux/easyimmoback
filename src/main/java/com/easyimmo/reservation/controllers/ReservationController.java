@@ -55,14 +55,18 @@ public class ReservationController {
             @RequestParam(value = "propertyId",required=false)Integer propertyId,
             @RequestParam(value = "fromDate",required=false) LocalDate fromDate,
             @RequestParam(value = "toDate",required=false)LocalDate toDate,
-            @RequestParam(value = "reservationDate",required=false)LocalDate reservationDate
+            @RequestParam(value = "reservationDate",required=false)LocalDate reservationDate,
+            @RequestParam(value="pageNr",required=false)Integer pageNr,
+            @RequestParam(value="pageSize",required=false)Integer pageSize
     ) {
         logger.info("get request received at reservation/getAll");
         ReservationCriteria criteria = new ReservationCriteria()
                 .propertyId(propertyId)
                 .fromDate(fromDate)
                 .toDate(toDate)
-                .reservationDate(reservationDate);
+                .reservationDate(reservationDate)
+                .pageNumber(pageNr)
+                .pageSize(pageSize);
         List<Reservation> reservationsList = reservationService.getAll(criteria);
         return new ResponseEntity<>(converter.convertListToReservationSummary(reservationsList), HttpStatus.OK);
     }

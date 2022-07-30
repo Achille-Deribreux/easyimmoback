@@ -57,7 +57,7 @@ public class FeeService implements IFeeService{
 
     @Override
     public List<Fee> getLastFees(Integer propertyId, Integer nbFees) {
-        FeeCriteria feeCriteria = new FeeCriteria().propertyId(propertyId).pageSize(nbFees);
+        FeeCriteria feeCriteria = new FeeCriteria().propertyId(propertyId).pageSize(nbFees).pageNumber(1);
         return feeRepository.findFeeByMultipleCriteria(feeCriteria);
     }
 }

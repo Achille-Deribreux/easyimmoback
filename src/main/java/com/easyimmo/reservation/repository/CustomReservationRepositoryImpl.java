@@ -32,8 +32,8 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("startDate")));
         TypedQuery<Reservation> typedQuery = entityManager.createQuery(criteriaQuery);
-        if(reservationCriteria.getPageSize()!=null)
-            typedQuery.setMaxResults(reservationCriteria.getPageSize());
+        if(reservationCriteria.getPageSize()!=null && reservationCriteria.getPageNumber()!=null)
+            typedQuery.setMaxResults(reservationCriteria.getPageSize()).setFirstResult(reservationCriteria.getPageNumber() * reservationCriteria.getPageSize());
         return typedQuery.getResultList();
     }
 }
