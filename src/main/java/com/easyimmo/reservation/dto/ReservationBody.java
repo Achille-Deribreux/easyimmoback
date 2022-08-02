@@ -1,7 +1,6 @@
 package com.easyimmo.reservation.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ReservationBody {
     private Integer id;
@@ -9,8 +8,7 @@ public class ReservationBody {
     private LocalDate fromDate;
     private LocalDate toDate;
     private Integer propertyId;
-    private Integer incomeId;
-    private List<Integer> feeIdList;
+    private Integer amount;
 
     public ReservationBody() {
     }
@@ -55,19 +53,11 @@ public class ReservationBody {
         this.propertyId = propertyId;
     }
 
-    public Integer getIncomeId() {
-        return incomeId;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setIncomeId(Integer incomeId) {
-        this.incomeId = incomeId;
-    }
-
-    public List<Integer> getFeeIdList() {
-        return feeIdList;
-    }
-
-    public void setFeeIdList(List<Integer> feeIdList) {
-        this.feeIdList = feeIdList;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }

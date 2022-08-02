@@ -213,9 +213,9 @@ public class Converter {
                 .reservationDate(reservation.getReservationDate())
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
-                .property(convert(reservation.getProperty()));
-                //.income(convert(reservation.getIncome()))
-                //.feeList(convertFeeList(reservation.getFeeList()));
+                .property(convert(reservation.getProperty()))
+                .income(reservation.getIncome()!=null ?convert(reservation.getIncome()):null)
+                .feeList(reservation.getFeeList()!=null && !reservation.getFeeList().isEmpty()? convertFeeList(reservation.getFeeList()):null);
     }
 
     public ReservationSummary convertToReservationSummary(Reservation reservation){
@@ -226,19 +226,38 @@ public class Converter {
                 .propertyName(reservation.getProperty().getName());
     }
 
-    public Reservation convertToReservationBody(ReservationBody reservationBody){
-        List<Fee> feeList = null;
-        if(reservationBody.getFeeIdList()!=null && !reservationBody.getFeeIdList().isEmpty()){
-            feeList = reservationBody.getFeeIdList().stream().map(id -> feeService.getFeeById(id)).collect(Collectors.toList());
-        }
-        return new Reservation()
-                .id(reservationBody.getId()!=null?reservationBody.getId():null)
+    /**
+     * Convert a reservationBody to a reservation entity
+     * - if the reservationBody has an id, it is an update query and :
+     *      it will get the income from the database and add it to the reservation Entity
+     *      if there is an amount which is specified, it will update the amount from the income entity
+     *
+     *  - if the reservationBody has no id, it is an create query and :
+     *    it will create a new income entity and add it to the reservation entity
+     *
+     * @param reservationBody the reservationBody to convert
+     * @return the reservation entity
+     */
+    public Reservation convertToReservation(ReservationBody reservationBody){
+        Reservation reservation =  new Reservation()
                 .reservationDate(reservationBody.getReservationDate())
                 .fromDate(reservationBody.getFromDate())
                 .toDate(reservationBody.getToDate())
-                .property(propertyService.getById(reservationBody.getPropertyId()))
-                .income(reservationBody.getIncomeId()!=null?incomeService.getIncomeById(reservationBody.getIncomeId()):null)
-                .feeList(feeList);
+                .property(propertyService.getById(reservationBody.getPropertyId()));
+
+        if(reservationBody.getId() != null){
+            reservation.id(reservationBody.getId());
+            if(reservationBody.getAmount() != null){
+                reservation.income(reservationService.getById(reservationBody.getId()).getIncome().amount(reservationBody.getAmount()));
+            }
+        }else {
+            reservation.income(new Income()
+                    .property(reservation.getProperty())
+                    .amount(reservationBody.getAmount())
+                    .description("Reservation for " + reservation.getProperty().getName())
+                    .date(reservation.getReservationDate()));
+        }
+        return reservation;
     }
 
     public List<ReservationSummary> convertListToReservationSummary(List<Reservation> reservationList){
