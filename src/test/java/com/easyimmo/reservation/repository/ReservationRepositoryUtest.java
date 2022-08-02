@@ -55,11 +55,70 @@ public class ReservationRepositoryUtest {
         reservation2 = reservationRepository.save(reservation2);
     }
 
+    /**
+     * TEST CASE 1, we search by property id
+     */
     @Test
     void findReservationByMultipleCriteriaTestCase1() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().property(property1);
         List<Reservation> expected = Collections.singletonList(reservation1);
+        //When
+        List<Reservation> result = reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
+        //Then
+        Assertions.assertEquals(expected, result);
+    }
+
+    /**
+     * TEST CASE 2, we search by reservationDate
+     */
+    @Test
+    void findReservationByMultipleCriteriaTestCase2() {
+        //Given
+        ReservationCriteria reservationCriteria = new ReservationCriteria().reservationDate(LocalDate.now().minusDays(1));
+        List<Reservation> expected = Collections.singletonList(reservation1);
+        //When
+        List<Reservation> result = reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
+        //Then
+        Assertions.assertEquals(expected, result);
+    }
+
+    /**
+     * TEST CASE 3, we search by fromDate
+     */
+    @Test
+    void findReservationByMultipleCriteriaTestCase3() {
+        //Given
+        ReservationCriteria reservationCriteria = new ReservationCriteria().fromDate(LocalDate.now().plusDays(1));
+        List<Reservation> expected = Collections.singletonList(reservation1);
+        //When
+        List<Reservation> result = reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
+        //Then
+        Assertions.assertEquals(expected, result);
+    }
+
+    /**
+     * TEST CASE 4, we search by toDate
+     */
+    @Test
+    void findReservationByMultipleCriteriaTestCase4() {
+        //Given
+        ReservationCriteria reservationCriteria = new ReservationCriteria().toDate(LocalDate.now().plusDays(10));
+        List<Reservation> expected = Collections.singletonList(reservation1);
+        //When
+        List<Reservation> result = reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
+        //Then
+        Assertions.assertEquals(expected, result);
+    }
+
+    /**
+     * TEST CASE 5, we search wih pageSize and pageNumber
+     */
+    @Test
+    void findReservationByMultipleCriteriaTestCase5() {
+        //Given
+        ReservationCriteria reservationCriteria = new ReservationCriteria().pageSize(1).pageNumber(1);
+        List<Reservation> expected = Collections.singletonList(reservation2);
         //When
         List<Reservation> result = reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
         //Then

@@ -26,9 +26,11 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
         Join<Reservation, Property> propertyJoin = reservationRoot.join("property", JoinType.LEFT);
         BasicUtils.ConditionalList<Predicate> conditionalList = BasicUtils.ConditionalList.of(new ArrayList<>());
         conditionalList.add(reservationCriteria.getProperty()!=null,()->criteriaBuilder.equal(propertyJoin.get("id"),reservationCriteria.getProperty().getId()));
-        //TODO: add other criteria
+        conditionalList.add(reservationCriteria.getReservationDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("reservationDate"),reservationCriteria.getReservationDate()));
+        conditionalList.add(reservationCriteria.getFromDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("fromDate"),reservationCriteria.getFromDate()));
+        conditionalList.add(reservationCriteria.getToDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("toDate"),reservationCriteria.getToDate()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
-        criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("fromDate")));
+        criteriaQuery.orderBy(criteriaBuilder.asc(reservationRoot.get("fromDate")));
         TypedQuery<Reservation> typedQuery = entityManager.createQuery(criteriaQuery);
         if(reservationCriteria.getPageSize()!=null && reservationCriteria.getPageNumber()!=null)
             typedQuery.setMaxResults(reservationCriteria.getPageSize()).setFirstResult(reservationCriteria.getPageNumber() * reservationCriteria.getPageSize());
