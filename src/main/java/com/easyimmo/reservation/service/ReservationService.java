@@ -1,6 +1,7 @@
 package com.easyimmo.reservation.service;
 
 import com.easyimmo.common.exception.ReservationNotFoundException;
+import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.UpdateReservationHelper;
 import com.easyimmo.reservation.model.Reservation;
@@ -18,8 +19,11 @@ public class ReservationService implements IReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    public ReservationService(ReservationRepository reservationRepository) {
+    private final PropertyService propertyService;
+
+    public ReservationService(ReservationRepository reservationRepository, PropertyService propertyService) {
         this.reservationRepository = reservationRepository;
+        this.propertyService = propertyService;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public List<Reservation> getLastReservations(Integer propertyId, Integer nbReservations) {
-        ReservationCriteria reservationCriteria = new ReservationCriteria().propertyId(propertyId).pageSize(nbReservations).pageNumber(1);
+        ReservationCriteria reservationCriteria = new ReservationCriteria().property(propertyService.getById(propertyId)).pageSize(nbReservations).pageNumber(1);
         return reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
     }
 }

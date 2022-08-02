@@ -57,13 +57,14 @@ public class ReservationController {
             @RequestParam(value="pageSize",required=false)Integer pageSize
     ) {
         logger.info("get request received at reservation/getAll");
-        ReservationCriteria criteria = new ReservationCriteria()
-                .propertyId(propertyId)
-                .fromDate(fromDate)
-                .toDate(toDate)
-                .reservationDate(reservationDate)
-                .pageNumber(pageNr)
-                .pageSize(pageSize);
+        ReservationCriteria criteria = converter.convertToReservationCriteria(
+                propertyId,
+                fromDate,
+                toDate,
+                reservationDate,
+                pageNr,
+                pageSize
+        );
         List<Reservation> reservationsList = reservationService.getAll(criteria);
         return new ResponseEntity<>(converter.convertListToReservationSummary(reservationsList), HttpStatus.OK);
     }

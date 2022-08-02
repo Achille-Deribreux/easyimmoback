@@ -15,6 +15,7 @@ import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationBody;
+import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
@@ -242,5 +243,15 @@ public class Converter {
 
     public List<ReservationSummary> convertListToReservationSummary(List<Reservation> reservationList){
         return reservationList.stream().map(this::convertToReservationSummary).collect(Collectors.toList());
+    }
+
+    public ReservationCriteria convertToReservationCriteria(Integer propertyId, LocalDate fromDate, LocalDate toDate, LocalDate reservationDate, Integer pageSize, Integer pageNr){
+        return new ReservationCriteria()
+                .property(propertyService.getById(propertyId))
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .reservationDate(reservationDate)
+                .pageSize(pageSize)
+                .pageNumber(pageNr);
     }
 }
