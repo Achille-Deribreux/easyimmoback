@@ -45,7 +45,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation addReservation(Reservation reservation) {
-        logger.info("add reservation with id : {}", reservation.getId());
+        logger.info("add reservation");
         return reservationRepository.save(reservation);
     }
 
