@@ -56,7 +56,6 @@ public class ReservationRepositoryUtest {
     }
 
     @Test
-    @Disabled
     void findReservationByMultipleCriteriaTestCase1() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().property(property1);
