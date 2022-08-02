@@ -212,9 +212,9 @@ public class Converter {
                 .reservationDate(reservation.getReservationDate())
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
-                .property(convert(reservation.getProperty()))
-                .income(convert(reservation.getIncome()))
-                .feeList(convertFeeList(reservation.getFeeList()));
+                .property(convert(reservation.getProperty()));
+                //.income(convert(reservation.getIncome()))
+                //.feeList(convertFeeList(reservation.getFeeList()));
     }
 
     public ReservationSummary convertToReservationSummary(Reservation reservation){
@@ -231,12 +231,12 @@ public class Converter {
             feeList = reservationBody.getFeeIdList().stream().map(id -> feeService.getFeeById(id)).collect(Collectors.toList());
         }
         return new Reservation()
-                .id(reservationBody.getId())
+                .id(reservationBody.getId()!=null?reservationBody.getId():null)
                 .reservationDate(reservationBody.getReservationDate())
                 .fromDate(reservationBody.getFromDate())
                 .toDate(reservationBody.getToDate())
                 .property(propertyService.getById(reservationBody.getPropertyId()))
-                .income(incomeService.getIncomeById(reservationBody.getIncomeId()))
+                .income(reservationBody.getIncomeId()!=null?incomeService.getIncomeById(reservationBody.getIncomeId()):null)
                 .feeList(feeList);
     }
 
