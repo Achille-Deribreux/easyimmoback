@@ -36,7 +36,7 @@ public class CustomFeeRepositoryImpl implements CustomFeeRepository{
         criteriaQuery.orderBy(criteriaBuilder.desc(feeRoot.get("date")));
         TypedQuery<Fee> typedQuery = entityManager.createQuery(criteriaQuery);
         if(feeCriteria.getPageSize()!=null && feeCriteria.getPageNumber()!=null){
-            typedQuery.setMaxResults(feeCriteria.getPageSize()).setFirstResult(feeCriteria.getPageNumber() * feeCriteria.getPageSize());
+            typedQuery.setMaxResults(feeCriteria.getPageSize()).setFirstResult((feeCriteria.getPageNumber()-1) * feeCriteria.getPageSize());
         }
         return typedQuery.getResultList();
     }

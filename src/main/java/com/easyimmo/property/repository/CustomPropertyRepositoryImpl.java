@@ -36,7 +36,7 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository{
         TypedQuery<Property> query = entityManager.createQuery(criteriaQuery);
 
         if(propertyCriteria.getPageSize()!=null && propertyCriteria.getPageNumber()!=null)
-            query.setMaxResults(propertyCriteria.getPageSize()).setFirstResult(propertyCriteria.getPageNumber() * propertyCriteria.getPageSize());
+            query.setMaxResults(propertyCriteria.getPageSize()).setFirstResult((propertyCriteria.getPageNumber()-1) * propertyCriteria.getPageSize());
         return query.getResultList();
     }
 
