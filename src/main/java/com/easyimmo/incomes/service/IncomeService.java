@@ -1,13 +1,11 @@
 package com.easyimmo.incomes.service;
 
 import com.easyimmo.common.exception.IncomeNotFoundException;
-import com.easyimmo.fees.dto.FeeCriteria;
-import com.easyimmo.fees.model.Fee;
+import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.incomes.dto.IncomeCriteria;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.repository.IncomeRepository;
 import com.easyimmo.incomes.util.UpdateIncomeHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,11 +14,13 @@ import java.util.List;
 @Service
 public class IncomeService implements IIncomeService{
 
-    @Autowired
-    private IncomeRepository incomeRepository;
+    private final IncomeRepository incomeRepository;
 
-    public IncomeService(IncomeRepository incomeRepository) {
+    private final CustomValidator validator;
+
+    public IncomeService(IncomeRepository incomeRepository, CustomValidator validator) {
         this.incomeRepository = incomeRepository;
+        this.validator = validator;
     }
 
     @Override
@@ -35,6 +35,7 @@ public class IncomeService implements IIncomeService{
 
     @Override
     public Income addIncome(Income income) {
+        validator.validate(income);
         return incomeRepository.save(income);
     }
 

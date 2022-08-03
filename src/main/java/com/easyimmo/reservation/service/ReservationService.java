@@ -61,8 +61,8 @@ public class ReservationService implements IReservationService {
 
     @Override
     public Reservation addReservation(  Reservation reservation, Integer price) {
-        logger.info("add reservation");
         validator.validate(reservation);
+        logger.info("add reservation");
         Income income = new Income()
                 .amount(price)
                 .property(propertyService.getById(reservation.getProperty().getId()))

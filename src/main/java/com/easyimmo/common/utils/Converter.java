@@ -246,7 +246,7 @@ public class Converter {
 
     public ReservationCriteria convertToReservationCriteria(Integer propertyId, LocalDate fromDate, LocalDate toDate, LocalDate reservationDate, Integer pageSize, Integer pageNr){
         return new ReservationCriteria()
-                .property(propertyService.getById(propertyId))
+                .property(propertyId!=null?propertyService.getById(propertyId):null)
                 .fromDate(fromDate)
                 .toDate(toDate)
                 .reservationDate(reservationDate)

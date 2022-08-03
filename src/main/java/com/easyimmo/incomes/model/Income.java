@@ -3,6 +3,7 @@ package com.easyimmo.incomes.model;
 import com.easyimmo.property.model.Property;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 @Entity
@@ -20,19 +21,24 @@ public class Income {
 
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
+    @NotNull
     private Property property;
 
     @Column(name = "amount")
+    @NotNull
     private Integer amount;
 
     @Column(name = "description")
+    @NotNull
     private String description;
 
     @Column(name = "date")
+    @NotNull
     private LocalDate date;
 
     @Column(name = "income_type")
     @Enumerated
+    @NotNull
     private IncomeType incomeType;
 
     public Income() {

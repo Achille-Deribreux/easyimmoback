@@ -1,6 +1,7 @@
 package com.easyimmo.property.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -19,15 +20,25 @@ public class Property {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @Column(name="address")
+    @NotNull
     private String address;
+
     @Column(name="name")
+    @NotNull
     private String name;
+
     @Column(name="type")
+    @NotNull
     private Type type;
+
     @Column(name="rentType")
+    @NotNull
     private RentType rentType;
+
     @Column(name="buyPrice")
+    @NotNull
     private Integer buyPrice;
 
 

@@ -1,6 +1,7 @@
 package com.easyimmo.fees.service;
 
 import com.easyimmo.common.exception.FeeNotFoundException;
+import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.fees.dto.FeeCriteria;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.repository.FeeRepository;
@@ -19,8 +20,11 @@ public class FeeService implements IFeeService{
 
     private final Logger logger = LoggerFactory.getLogger(FeeService.class);
 
-    public FeeService(FeeRepository feeRepository) {
+    private final CustomValidator validator;
+
+    public FeeService(FeeRepository feeRepository, CustomValidator validator) {
         this.feeRepository = feeRepository;
+        this.validator = validator;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class FeeService implements IFeeService{
 
     @Override
     public Fee addFee(Fee fee) {
+        validator.validate(fee);
         logger.info("adding fee : {}", fee);
         return feeRepository.save(fee);
     }

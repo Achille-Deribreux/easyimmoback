@@ -4,6 +4,7 @@ import com.easyimmo.property.model.Property;
 import com.easyimmo.reservation.model.Reservation;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -17,14 +18,23 @@ public class Fee {
     private Integer id;
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
+    @NotNull
     private Property property;
+
     @Column(name="supplier")
+    @NotNull
     private String supplier;
+
     @Column(name="description")
+    @NotNull
     private String description;
+
     @Column(name="price")
+    @NotNull
     private Integer amount;
+
     @Column(name="date")
+    @NotNull
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)

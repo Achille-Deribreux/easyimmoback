@@ -37,7 +37,7 @@ public class Reservation {
     @NotNull
     private Property property;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name="income_id", referencedColumnName = "id")
     private Income income;
 
