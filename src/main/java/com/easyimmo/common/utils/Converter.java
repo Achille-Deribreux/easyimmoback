@@ -228,36 +228,16 @@ public class Converter {
 
     /**
      * Convert a reservationBody to a reservation entity
-     * - if the reservationBody has an id, it is an update query and :
-     *      it will get the income from the database and add it to the reservation Entity
-     *      if there is an amount which is specified, it will update the amount from the income entity
-     *
-     *  - if the reservationBody has no id, it is an create query and :
-     *    it will create a new income entity and add it to the reservation entity
-     *
      * @param reservationBody the reservationBody to convert
      * @return the reservation entity
      */
     public Reservation convertToReservation(ReservationBody reservationBody){
-        Reservation reservation =  new Reservation()
+        return new Reservation()
+                .id(reservationBody.getId())
                 .reservationDate(reservationBody.getReservationDate())
                 .fromDate(reservationBody.getFromDate())
                 .toDate(reservationBody.getToDate())
                 .property(propertyService.getById(reservationBody.getPropertyId()));
-
-        if(reservationBody.getId() != null){
-            reservation.id(reservationBody.getId());
-            if(reservationBody.getAmount() != null){
-                reservation.income(reservationService.getById(reservationBody.getId()).getIncome().amount(reservationBody.getAmount()));
-            }
-        }else {
-            reservation.income(new Income()
-                    .property(reservation.getProperty())
-                    .amount(reservationBody.getAmount())
-                    .description("Reservation for " + reservation.getProperty().getName())
-                    .date(reservation.getReservationDate()));
-        }
-        return reservation;
     }
 
     public List<ReservationSummary> convertListToReservationSummary(List<Reservation> reservationList){

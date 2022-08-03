@@ -33,4 +33,10 @@ public class ExceptionsHandler {
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
         return new ResponseEntity<>(customErrorResponse,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InvalidEntityException.class)
+    public ResponseEntity<Object>handleInvalidEntityException(InvalidEntityException e){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
+        return new ResponseEntity<>(customErrorResponse,HttpStatus.BAD_REQUEST);
+    }
 }

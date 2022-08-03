@@ -77,7 +77,7 @@ public class ReservationController {
     @PostMapping(value="/add")
     public ResponseEntity<ReservationDetails> addReservation(@RequestBody ReservationBody reservationBody) {
         logger.info("post request received at reservation/add for reservationBody : {}", reservationBody);
-        return new ResponseEntity<>(converter.convertToReservationDetails(reservationService.addReservation(converter.convertToReservation(reservationBody))), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToReservationDetails(reservationService.addReservation(converter.convertToReservation(reservationBody), reservationBody.getAmount())), HttpStatus.OK);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ReservationController {
     @PutMapping(value="/update")
     public ResponseEntity<ReservationDetails> updateReservation(@RequestParam(value="id") Integer id, @RequestBody ReservationBody reservationBody) {
         logger.info("put request received at reservation/update for id : {} and reservationBody : {}", id, reservationBody);
-        return new ResponseEntity<>(converter.convertToReservationDetails(reservationService.updateReservation(id, converter.convertToReservation(reservationBody))), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToReservationDetails(reservationService.updateReservation(id, converter.convertToReservation(reservationBody), reservationBody.getAmount())), HttpStatus.OK);
     }
 
     /**
