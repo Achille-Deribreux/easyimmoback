@@ -25,14 +25,14 @@ public interface IReservationService {
      * @param reservation updated reservation
      * @return updated reservation
      */
-    Reservation updateReservation(Integer id, Reservation reservation);
+    Reservation updateReservation(Integer id, Reservation reservation, Integer price);
 
     /**
      * This method allows you to add a reservation
      * @param reservation reservation that you want to add
      * @return the added reservation
      */
-    Reservation addReservation(Reservation reservation);
+    Reservation addReservation(Reservation reservation, Integer price);
 
     /**
      * This method allows you to delete a reservation, for a given id

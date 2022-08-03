@@ -1,6 +1,7 @@
 package com.easyimmo.property.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -19,15 +20,25 @@ public class Property {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @Column(name="address")
+    @NotNull
     private String address;
+
     @Column(name="name")
+    @NotNull
     private String name;
+
     @Column(name="type")
+    @NotNull
     private Type type;
+
     @Column(name="rentType")
+    @NotNull
     private RentType rentType;
+
     @Column(name="buyPrice")
+    @NotNull
     private Integer buyPrice;
 
 
@@ -51,12 +62,22 @@ public class Property {
         this.id = id;
     }
 
+    public Property id(Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Property address(String address) {
+        this.address = address;
+        return this;
     }
 
     public String getName() {
@@ -67,6 +88,11 @@ public class Property {
         this.name = name;
     }
 
+    public Property name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public Type getType() {
         return type;
     }
@@ -75,12 +101,22 @@ public class Property {
         this.type = type;
     }
 
+    public Property type(Type type) {
+        this.type = type;
+        return this;
+    }
+
     public Integer getBuyPrice() {
         return buyPrice;
     }
 
-    public void setBuyPrice(Integer prixAchat) {
-        this.buyPrice = prixAchat;
+    public void setBuyPrice(Integer buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
+    public Property buyPrice(Integer buyPrice){
+        setBuyPrice(buyPrice);
+        return this;
     }
 
     public RentType getRentType() {
@@ -89,6 +125,11 @@ public class Property {
 
     public void setRentType(RentType rentType) {
         this.rentType = rentType;
+    }
+
+    public Property rentType(RentType rentType){
+        setRentType(rentType);
+        return this;
     }
 
     @Override

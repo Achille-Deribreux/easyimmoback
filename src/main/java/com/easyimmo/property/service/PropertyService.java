@@ -1,5 +1,6 @@
 package com.easyimmo.property.service;
 
+import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.property.dto.PropertyCriteria;
 import com.easyimmo.common.exception.PropertyNotFoundException;
 import com.easyimmo.property.model.Property;
@@ -18,8 +19,11 @@ public class PropertyService implements IPropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public PropertyService(PropertyRepository propertyRepository) {
+    private final CustomValidator validator;
+
+    public PropertyService(PropertyRepository propertyRepository, CustomValidator customValidator) {
         this.propertyRepository = propertyRepository;
+        this.validator = customValidator;
     }
 
     @Override
@@ -44,6 +48,7 @@ public class PropertyService implements IPropertyService {
 
     @Override
     public Property addProperty(Property property) {
+        validator.validate(property);
         logger.info("add property with name : {}", property.getName());
         return propertyRepository.save(property);
     }

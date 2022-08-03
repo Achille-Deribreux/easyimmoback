@@ -1,10 +1,12 @@
 package com.easyimmo.reservation.dto;
 
+import com.easyimmo.property.model.Property;
+
 import java.time.LocalDate;
 
 public class ReservationCriteria {
 
-    private Integer propertyId;
+    private Property property;
     private LocalDate fromDate;
     private LocalDate toDate;
     private LocalDate reservationDate;
@@ -14,16 +16,16 @@ public class ReservationCriteria {
     public ReservationCriteria() {
     }
 
-    public Integer getPropertyId() {
-        return propertyId;
+    public Property getProperty() {
+        return property;
     }
 
-    public void setPropertyId(Integer propertyId) {
-        this.propertyId = propertyId;
+    public void setProperty(Property property) {
+        this.property = property;
     }
 
-    public ReservationCriteria propertyId(Integer propertyId) {
-        this.propertyId = propertyId;
+    public ReservationCriteria property(Property property) {
+        this.property = property;
         return this;
     }
 

@@ -15,6 +15,7 @@ import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationBody;
+import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
@@ -212,9 +213,9 @@ public class Converter {
                 .reservationDate(reservation.getReservationDate())
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
-                .property(convert(reservation.getProperty()));
-                //.income(convert(reservation.getIncome()))
-                //.feeList(convertFeeList(reservation.getFeeList()));
+                .property(convert(reservation.getProperty()))
+                .income(reservation.getIncome()!=null ?convert(reservation.getIncome()):null)
+                .feeList(reservation.getFeeList()!=null && !reservation.getFeeList().isEmpty()? convertFeeList(reservation.getFeeList()):null);
     }
 
     public ReservationSummary convertToReservationSummary(Reservation reservation){
@@ -225,22 +226,31 @@ public class Converter {
                 .propertyName(reservation.getProperty().getName());
     }
 
-    public Reservation convertToReservationBody(ReservationBody reservationBody){
-        List<Fee> feeList = null;
-        if(reservationBody.getFeeIdList()!=null && !reservationBody.getFeeIdList().isEmpty()){
-            feeList = reservationBody.getFeeIdList().stream().map(id -> feeService.getFeeById(id)).collect(Collectors.toList());
-        }
+    /**
+     * Convert a reservationBody to a reservation entity
+     * @param reservationBody the reservationBody to convert
+     * @return the reservation entity
+     */
+    public Reservation convertToReservation(ReservationBody reservationBody){
         return new Reservation()
-                .id(reservationBody.getId()!=null?reservationBody.getId():null)
+                .id(reservationBody.getId())
                 .reservationDate(reservationBody.getReservationDate())
                 .fromDate(reservationBody.getFromDate())
                 .toDate(reservationBody.getToDate())
-                .property(propertyService.getById(reservationBody.getPropertyId()))
-                .income(reservationBody.getIncomeId()!=null?incomeService.getIncomeById(reservationBody.getIncomeId()):null)
-                .feeList(feeList);
+                .property(propertyService.getById(reservationBody.getPropertyId()));
     }
 
     public List<ReservationSummary> convertListToReservationSummary(List<Reservation> reservationList){
         return reservationList.stream().map(this::convertToReservationSummary).collect(Collectors.toList());
+    }
+
+    public ReservationCriteria convertToReservationCriteria(Integer propertyId, LocalDate fromDate, LocalDate toDate, LocalDate reservationDate, Integer pageSize, Integer pageNr){
+        return new ReservationCriteria()
+                .property(propertyId!=null?propertyService.getById(propertyId):null)
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .reservationDate(reservationDate)
+                .pageSize(pageSize)
+                .pageNumber(pageNr);
     }
 }

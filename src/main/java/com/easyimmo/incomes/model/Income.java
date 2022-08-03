@@ -3,6 +3,7 @@ package com.easyimmo.incomes.model;
 import com.easyimmo.property.model.Property;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 @Entity
@@ -20,19 +21,24 @@ public class Income {
 
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
+    @NotNull
     private Property property;
 
     @Column(name = "amount")
+    @NotNull
     private Integer amount;
 
     @Column(name = "description")
+    @NotNull
     private String description;
 
     @Column(name = "date")
+    @NotNull
     private LocalDate date;
 
     @Column(name = "income_type")
     @Enumerated
+    @NotNull
     private IncomeType incomeType;
 
     public Income() {
@@ -55,12 +61,22 @@ public class Income {
         this.id = id;
     }
 
+    public Income id(Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public Property getProperty() {
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Income property(Property property) {
+        this.property = property;
+        return this;
     }
 
     public Integer getAmount() {
@@ -71,12 +87,22 @@ public class Income {
         this.amount = amount;
     }
 
+    public Income amount(Integer amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Income description(String description) {
+        this.description = description;
+        return this;
     }
 
     public LocalDate getDate() {
@@ -87,12 +113,22 @@ public class Income {
         this.date = date;
     }
 
+    public Income date(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
     public IncomeType getIncomeType() {
         return incomeType;
     }
 
     public void setIncomeType(IncomeType incomeType) {
         this.incomeType = incomeType;
+    }
+
+    public Income incomeType(IncomeType incomeType) {
+        this.incomeType = incomeType;
+        return this;
     }
 
     @Override
