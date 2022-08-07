@@ -2,6 +2,7 @@ package com.easyimmo.fees.controllers;
 
 import com.easyimmo.common.utils.Converter;
 import com.easyimmo.fees.dto.FeeCriteria;
+import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.service.FeeService;
@@ -35,9 +36,9 @@ public class FeeController {
      * @return response entity with the wanted fee and status code 200 if everything is ok
      */
     @GetMapping(value="/getById")
-    public ResponseEntity<FeeDto>getFeeById(@RequestParam(value="id")Integer id){
+    public ResponseEntity<FeeDetails>getFeeById(@RequestParam(value="id")Integer id){
         logger.info("get request received at fee/getById for id : {}", id);
-        return new ResponseEntity<>(converter.convert(feeService.getFeeById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToDetails(feeService.getFeeById(id)), HttpStatus.OK);
     }
 
     /**
