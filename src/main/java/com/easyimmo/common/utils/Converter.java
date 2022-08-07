@@ -51,7 +51,7 @@ public class Converter {
     public Fee convert(FeeDto feeDto){
         return new Fee(
                 feeDto.getId(),
-                propertyService.getById(feeDto.getPropertyId()),
+                feeDto.getPropertyId()!=null?propertyService.getById(feeDto.getPropertyId()):null,
                 feeDto.getSupplier(),
                 feeDto.getDescription(),
                 feeDto.getAmount(),
@@ -102,8 +102,8 @@ public class Converter {
 
     private static final EnumMapper<String, Property.RentType> propertyRentTypeMap = new EnumMapper<>();
     static {
-        propertyRentTypeMap.add("SHORT_RENT", Property.RentType.SHORT);
-        propertyRentTypeMap.add("LONG_RENT", Property.RentType.LONG);
+        propertyRentTypeMap.add("SHORT", Property.RentType.SHORT);
+        propertyRentTypeMap.add("LONG", Property.RentType.LONG);
     }
 
 

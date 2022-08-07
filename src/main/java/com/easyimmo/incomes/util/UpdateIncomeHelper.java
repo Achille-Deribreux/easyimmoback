@@ -45,12 +45,12 @@ public class UpdateIncomeHelper {
         return this;
     }
 
-    public Income build(Income income) {
+    public Income build(Income incomeBody) {
         this
-                .property(income.getProperty())
-                .amount(income.getAmount())
-                .description(income.getDescription())
-                .date(income.getDate());
+                .property(incomeBody.getProperty())
+                .amount(incomeBody.getAmount())
+                .description(incomeBody.getDescription())
+                .date(incomeBody.getDate());
         return income;
     }
 }

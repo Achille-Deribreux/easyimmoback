@@ -52,13 +52,13 @@ public class UpdateFeeHelper {
         return this;
     }
 
-    public Fee build(Fee fee) {
+    public Fee build(Fee feeBody) {
         this
-            .property(fee.getProperty())
-            .amount(fee.getAmount())
-            .supplier(fee.getSupplier())
-            .description(fee.getDescription())
-            .date(fee.getDate());
+            .property(feeBody.getProperty())
+            .amount(feeBody.getAmount())
+            .supplier(feeBody.getSupplier())
+            .description(feeBody.getDescription())
+            .date(feeBody.getDate());
         return fee;
     }
 
