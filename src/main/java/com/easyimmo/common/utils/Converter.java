@@ -1,6 +1,7 @@
 package com.easyimmo.common.utils;
 
 import com.easyimmo.bankloan.dto.BankLoanSummary;
+import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.dto.FeeSummary;
 import com.easyimmo.fees.model.Fee;
@@ -68,6 +69,16 @@ public class Converter {
                 fee.getAmount(),
                 fee.getDate()
         );
+    }
+
+    public FeeDetails convertToDetails(Fee fee){
+        return new FeeDetails()
+                .id(fee.getId())
+                .property(fee.getProperty())
+                .supplier(fee.getSupplier())
+                .description(fee.getDescription())
+                .amount(fee.getAmount())
+                .date(fee.getDate());
     }
 
     public FeeSummary convertToSummary(Fee fee) {
