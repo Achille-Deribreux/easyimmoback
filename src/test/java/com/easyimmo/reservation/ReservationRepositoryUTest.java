@@ -1,4 +1,4 @@
-package com.easyimmo.reservation.repository;
+package com.easyimmo.reservation;
 
 import com.easyimmo.EntityBuilder;
 import com.easyimmo.incomes.model.Income;
@@ -7,20 +7,19 @@ import com.easyimmo.property.model.Property;
 import com.easyimmo.property.repository.PropertyRepository;
 import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.model.Reservation;
+import com.easyimmo.reservation.repository.ReservationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
 @DataJpaTest
-public class ReservationRepositoryUtest {
+class ReservationRepositoryUTest {
 
     @Autowired
     private ReservationRepository reservationRepository;

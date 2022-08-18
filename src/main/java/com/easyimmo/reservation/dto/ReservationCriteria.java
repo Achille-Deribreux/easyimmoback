@@ -3,6 +3,7 @@ package com.easyimmo.reservation.dto;
 import com.easyimmo.property.model.Property;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class ReservationCriteria {
 
@@ -94,4 +95,16 @@ public class ReservationCriteria {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReservationCriteria that = (ReservationCriteria) o;
+        return Objects.equals(property, that.property) && Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate) && Objects.equals(reservationDate, that.reservationDate) && Objects.equals(pageSize, that.pageSize) && Objects.equals(pageNumber, that.pageNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(property, fromDate, toDate, reservationDate, pageSize, pageNumber);
+    }
 }
