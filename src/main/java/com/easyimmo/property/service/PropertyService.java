@@ -1,16 +1,17 @@
 package com.easyimmo.property.service;
 
-import com.easyimmo.common.utils.CustomValidator;
-import com.easyimmo.property.dto.PropertyCriteria;
-import com.easyimmo.common.exception.PropertyNotFoundException;
-import com.easyimmo.property.model.Property;
-import com.easyimmo.property.repository.PropertyRepository;
-import com.easyimmo.property.util.UpdatePropertyHelper;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.easyimmo.common.exception.PropertyNotFoundException;
+import com.easyimmo.common.utils.CustomValidator;
+import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.model.Property;
+import com.easyimmo.property.repository.PropertyRepository;
+import com.easyimmo.property.util.UpdatePropertyHelper;
 
 @Service
 public class PropertyService implements IPropertyService {

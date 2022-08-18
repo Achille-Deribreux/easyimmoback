@@ -1,10 +1,10 @@
 package com.easyimmo.incomes.service;
 
-import com.easyimmo.incomes.dto.IncomeCriteria;
-import com.easyimmo.incomes.model.Income;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import com.easyimmo.incomes.dto.IncomeCriteria;
+import com.easyimmo.incomes.model.Income;
 
 public interface IIncomeService {
 

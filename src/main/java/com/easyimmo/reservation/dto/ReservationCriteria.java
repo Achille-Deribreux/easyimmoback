@@ -1,9 +1,9 @@
 package com.easyimmo.reservation.dto;
 
-import com.easyimmo.property.model.Property;
-
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.easyimmo.property.model.Property;
 
 public class ReservationCriteria {
 

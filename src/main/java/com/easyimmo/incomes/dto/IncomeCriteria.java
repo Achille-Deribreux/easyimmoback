@@ -1,8 +1,8 @@
 package com.easyimmo.incomes.dto;
 
-import com.easyimmo.incomes.model.Income;
-
 import java.time.LocalDate;
+
+import com.easyimmo.incomes.model.Income;
 
 public class IncomeCriteria {
 

@@ -1,10 +1,7 @@
 package com.easyimmo.property;
 
-import com.easyimmo.common.exception.PropertyNotFoundException;
-import com.easyimmo.property.dto.PropertyCriteria;
-import com.easyimmo.property.model.Property;
-import com.easyimmo.property.repository.PropertyRepository;
-import com.easyimmo.property.service.PropertyService;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +9,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
+import com.easyimmo.common.exception.PropertyNotFoundException;
+import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.model.Property;
+import com.easyimmo.property.repository.PropertyRepository;
+import com.easyimmo.property.service.PropertyService;
 
 @SpringBootTest
 class PropertyServiceUTest {

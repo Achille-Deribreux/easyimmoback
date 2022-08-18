@@ -1,9 +1,9 @@
 package com.easyimmo.incomes.util;
 
+import java.time.LocalDate;
+
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.property.model.Property;
-
-import java.time.LocalDate;
 
 public class UpdateIncomeHelper {
 

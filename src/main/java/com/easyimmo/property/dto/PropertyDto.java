@@ -1,9 +1,9 @@
 package com.easyimmo.property.dto;
 
 
-import com.easyimmo.property.model.Property;
-
 import java.util.Objects;
+
+import com.easyimmo.property.model.Property;
 
 public class PropertyDto {
 

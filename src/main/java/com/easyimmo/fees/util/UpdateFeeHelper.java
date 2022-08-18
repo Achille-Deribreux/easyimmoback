@@ -1,9 +1,9 @@
 package com.easyimmo.fees.util;
 
+import java.time.LocalDate;
+
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.property.model.Property;
-
-import java.time.LocalDate;
 
 public class UpdateFeeHelper {
 

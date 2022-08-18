@@ -1,8 +1,8 @@
 package com.easyimmo.fees.dto;
 
-import com.easyimmo.property.model.Property;
-
 import java.time.LocalDate;
+
+import com.easyimmo.property.model.Property;
 
 public class FeeDetails {
     private Integer id;

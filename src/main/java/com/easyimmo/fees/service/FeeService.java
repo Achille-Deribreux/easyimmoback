@@ -1,17 +1,18 @@
 package com.easyimmo.fees.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.easyimmo.common.exception.FeeNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.fees.dto.FeeCriteria;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.repository.FeeRepository;
 import com.easyimmo.fees.util.UpdateFeeHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class FeeService implements IFeeService{

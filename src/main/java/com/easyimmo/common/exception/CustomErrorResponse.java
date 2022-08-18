@@ -1,8 +1,8 @@
 package com.easyimmo.common.exception;
 
-import org.springframework.http.HttpStatus;
-
 import java.time.ZonedDateTime;
+
+import org.springframework.http.HttpStatus;
 
 public class CustomErrorResponse {
     private final String message;

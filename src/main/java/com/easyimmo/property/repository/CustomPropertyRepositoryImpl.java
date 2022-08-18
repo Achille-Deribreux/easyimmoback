@@ -1,8 +1,7 @@
 package com.easyimmo.property.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.property.dto.PropertyCriteria;
-import com.easyimmo.property.model.Property;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,8 +10,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.model.Property;
 
 public class CustomPropertyRepositoryImpl implements CustomPropertyRepository{
 

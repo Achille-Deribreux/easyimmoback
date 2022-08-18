@@ -1,12 +1,12 @@
 package com.easyimmo.reservation.dto;
 
-import com.easyimmo.fees.dto.FeeDto;
-import com.easyimmo.incomes.dto.IncomeDto;
-import com.easyimmo.property.dto.PropertyDto;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import com.easyimmo.fees.dto.FeeDto;
+import com.easyimmo.incomes.dto.IncomeDto;
+import com.easyimmo.property.dto.PropertyDto;
 
 public class ReservationDetails {
     private Integer id;

@@ -1,11 +1,11 @@
 package com.easyimmo.property.dto;
 
+import java.util.List;
+
 import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.fees.dto.FeeSummary;
 import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.reservation.dto.ReservationSummary;
-
-import java.util.List;
 
 public class PropertyDetails {
     private Integer id;

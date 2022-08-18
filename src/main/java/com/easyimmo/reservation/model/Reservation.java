@@ -1,15 +1,25 @@
 package com.easyimmo.reservation.model;
 
-import com.easyimmo.fees.model.Fee;
-import com.easyimmo.incomes.model.Income;
-import com.easyimmo.property.model.Property;
-
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.easyimmo.fees.model.Fee;
+import com.easyimmo.incomes.model.Income;
+import com.easyimmo.property.model.Property;
 
 @Entity
 @Table(name = "reservation")

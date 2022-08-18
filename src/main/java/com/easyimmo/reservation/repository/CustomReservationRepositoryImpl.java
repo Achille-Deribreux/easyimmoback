@@ -1,16 +1,22 @@
 package com.easyimmo.reservation.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.property.model.Property;
-import com.easyimmo.reservation.dto.ReservationCriteria;
-import com.easyimmo.reservation.model.Reservation;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.property.model.Property;
+import com.easyimmo.reservation.dto.ReservationCriteria;
+import com.easyimmo.reservation.model.Reservation;
 
 public class CustomReservationRepositoryImpl implements CustomReservationRepository {
 

@@ -1,5 +1,11 @@
 package com.easyimmo.common.utils;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
 import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
@@ -21,11 +27,6 @@ import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.service.ReservationService;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class Converter {

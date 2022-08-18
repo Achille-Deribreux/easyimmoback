@@ -1,12 +1,7 @@
 package com.easyimmo.reservation;
 
-import com.easyimmo.common.exception.ReservationNotFoundException;
-import com.easyimmo.property.model.Property;
-import com.easyimmo.property.service.PropertyService;
-import com.easyimmo.reservation.dto.ReservationCriteria;
-import com.easyimmo.reservation.model.Reservation;
-import com.easyimmo.reservation.repository.ReservationRepository;
-import com.easyimmo.reservation.service.ReservationService;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +9,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
+import com.easyimmo.common.exception.ReservationNotFoundException;
+import com.easyimmo.property.model.Property;
+import com.easyimmo.property.service.PropertyService;
+import com.easyimmo.reservation.dto.ReservationCriteria;
+import com.easyimmo.reservation.model.Reservation;
+import com.easyimmo.reservation.repository.ReservationRepository;
+import com.easyimmo.reservation.service.ReservationService;
 
 @SpringBootTest
 class ReservationServiceUTest {

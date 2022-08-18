@@ -1,5 +1,11 @@
 package com.easyimmo.reservation.service;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.easyimmo.common.exception.ReservationNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.incomes.model.Income;
@@ -9,11 +15,6 @@ import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.UpdateReservationHelper;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.repository.ReservationRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ReservationService implements IReservationService {

@@ -1,16 +1,21 @@
 package com.easyimmo.fees.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.fees.dto.FeeCriteria;
-import com.easyimmo.fees.model.Fee;
-import com.easyimmo.property.model.Property;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.fees.dto.FeeCriteria;
+import com.easyimmo.fees.model.Fee;
+import com.easyimmo.property.model.Property;
 
 public class CustomFeeRepositoryImpl implements CustomFeeRepository{
 
