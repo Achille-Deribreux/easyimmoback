@@ -1,11 +1,11 @@
 package com.easyimmo;
 
+import java.time.LocalDate;
+import java.util.Collections;
+
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.reservation.model.Reservation;
-
-import java.time.LocalDate;
-import java.util.Collections;
 
 public class EntityBuilder {
 
@@ -30,6 +30,7 @@ public class EntityBuilder {
 
     public static Income buildIncome(Integer amount, Property property){
         return new Income()
+                .incomeType(Income.IncomeType.SHORTRENT)
                 .amount(amount)
                 .date(LocalDate.now())
                 .description("description")
