@@ -1,6 +1,7 @@
 package com.easyimmo.fees.dto;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class FeeCriteria {
 
@@ -104,7 +105,7 @@ public class FeeCriteria {
         this.maxDate = maxDate;
     }
 
-    public FeeCriteria maxaDate(LocalDate date){
+    public FeeCriteria maxDate(LocalDate date){
         setMaxDate(date);
         return this;
     }
@@ -146,5 +147,18 @@ public class FeeCriteria {
     public FeeCriteria pageNumber(Integer pageNumber){
         setPageNumber(pageNumber);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FeeCriteria that = (FeeCriteria) o;
+        return Objects.equals(propertyName, that.propertyName) &&  Objects.equals(description, that.description) && Objects.equals(minDate, that.minDate) && Objects.equals(maxDate, that.maxDate) && Objects.equals(propertyId, that.propertyId) && Objects.equals(pageSize, that.pageSize) && Objects.equals(pageNumber, that.pageNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(propertyName, supplier, minAmount, maxAmount, description, minDate, maxDate, propertyId, pageSize, pageNumber);
     }
 }

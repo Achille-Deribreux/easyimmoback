@@ -101,7 +101,7 @@ public class FeeController {
                 .minAmount(minAmount)
                 .maxAmount(maxAmount)
                 .minDate(minDate)
-                .maxaDate(maxDate)
+                .maxDate(maxDate)
                 .pageSize(pageSize)
                 .pageNumber(pageNr);
 

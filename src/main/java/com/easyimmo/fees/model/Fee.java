@@ -70,12 +70,22 @@ public class Fee {
         this.id = id;
     }
 
+    public Fee id(Integer id){
+        setId(id);
+        return this;
+    }
+
     public Property getProperty() {
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Fee property(Property property){
+        setProperty(property);
+        return this;
     }
 
     public String getSupplier() {
@@ -86,12 +96,22 @@ public class Fee {
         this.supplier = supplier;
     }
 
+    public Fee supplier(String supplier){
+        setSupplier(supplier);
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Fee description(String description){
+        setDescription(description);
+        return this;
     }
 
     public Integer getAmount() {
@@ -102,12 +122,22 @@ public class Fee {
         this.amount = amount;
     }
 
+    public Fee amount(Integer amount){
+        setAmount(amount);
+        return this;
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Fee date(LocalDate date){
+        setDate(date);
+        return this;
     }
 
     @Override

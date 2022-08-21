@@ -3,6 +3,7 @@ package com.easyimmo;
 import java.time.LocalDate;
 import java.util.Collections;
 
+import com.easyimmo.fees.model.Fee;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.reservation.model.Reservation;
@@ -35,5 +36,14 @@ public class EntityBuilder {
                 .date(LocalDate.now())
                 .description("description")
                 .property(property);
+    }
+
+    public static Fee buildFee(){
+        return new Fee()
+                .amount(1000)
+                .description("description")
+                .supplier("supplier")
+                .property(buildProperty("property"))
+                .date(LocalDate.now());
     }
 }
