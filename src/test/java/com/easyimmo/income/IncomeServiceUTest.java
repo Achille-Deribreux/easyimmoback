@@ -115,4 +115,17 @@ class IncomeServiceUTest {
         //Then
         Mockito.verify(incomeRepository,Mockito.times(1)).delete(incomeToDelete);
     }
+
+    @Test
+    void updateIncomeTest() {
+        //Given
+        Income income = EntityBuilder.buildIncome(100, new Property()).id(1231);
+        Income incomeBody = new Income().incomeType(Income.IncomeType.EXCEPTIONAL).property(new Property().id(12)).amount(10012).description("description").date(LocalDate.now());
+        Income updatedIncome = incomeBody.id(1231);
+        //When
+        Mockito.when(incomeRepository.findById(income.getId())).thenReturn(Optional.of(income));
+        incomeService.updateIncome(income.getId(),incomeBody);
+        //Then
+        Mockito.verify(incomeRepository,Mockito.times(1)).save(updatedIncome);
+    }
 }

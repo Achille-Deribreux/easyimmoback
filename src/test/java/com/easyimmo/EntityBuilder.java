@@ -20,6 +20,16 @@ public class EntityBuilder {
                 .feeList(Collections.emptyList());
     }
 
+    public static Reservation buildDefaultReservation(Property property, Income income) {
+        return new Reservation()
+                .property(property)
+                .reservationDate(LocalDate.now().minusMonths(1))
+                .fromDate(LocalDate.now().plusWeeks(1))
+                .toDate(LocalDate.now().plusWeeks(3))
+                .income(income)
+                .feeList(Collections.emptyList());
+    }
+
     public static Property buildProperty(String name){
         return new Property()
                 .name(name)

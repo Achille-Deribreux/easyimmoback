@@ -45,12 +45,20 @@ public class UpdateIncomeHelper {
         return this;
     }
 
+    public UpdateIncomeHelper incomeType(Income.IncomeType incomeType) {
+        if (incomeType != null && !incomeType.equals(income.getIncomeType())) {
+            income.setIncomeType(incomeType);
+        }
+        return this;
+    }
+
     public Income build(Income incomeBody) {
         this
                 .property(incomeBody.getProperty())
                 .amount(incomeBody.getAmount())
                 .description(incomeBody.getDescription())
-                .date(incomeBody.getDate());
+                .date(incomeBody.getDate())
+                .incomeType(incomeBody.getIncomeType());
         return income;
     }
 }

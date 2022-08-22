@@ -17,6 +17,7 @@ import com.easyimmo.fees.dto.FeeCriteria;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.repository.FeeRepository;
 import com.easyimmo.fees.service.FeeService;
+import com.easyimmo.property.model.Property;
 
 @SpringBootTest
 class FeeServiceUTest {
@@ -88,6 +89,19 @@ class FeeServiceUTest {
         feeService.addFee(feeToAdd);
         //Then
         Mockito.verify(feeRepository, Mockito.times(1)).save(feeToAdd);
+    }
+
+    @Test
+    void updateFeeTest() {
+        //Given
+        Fee originalFee = EntityBuilder.buildFee().id(100);
+        Fee feeBody = new Fee().amount(12021).description("description").supplier("supplier").date(LocalDate.now()).property(new Property().address("address").name("name").id(1));
+        Fee updatedFee = feeBody.id(100);
+        //When
+        Mockito.when(feeRepository.findById(originalFee.getId())).thenReturn(Optional.of(originalFee));
+        feeService.updateFee(originalFee.getId(),feeBody);
+        //Then
+        Mockito.verify(feeRepository, Mockito.times(1)).save(updatedFee);
     }
 
     @Test

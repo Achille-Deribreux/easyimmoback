@@ -1,5 +1,6 @@
 package com.easyimmo.reservation;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +10,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.easyimmo.EntityBuilder;
 import com.easyimmo.common.exception.ReservationNotFoundException;
+import com.easyimmo.common.utils.CustomValidator;
+import com.easyimmo.incomes.model.Income;
+import com.easyimmo.incomes.service.IncomeService;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationCriteria;
@@ -21,7 +26,13 @@ import com.easyimmo.reservation.service.ReservationService;
 class ReservationServiceUTest {
 
     @Mock
+    CustomValidator validator;
+
+    @Mock
     ReservationRepository reservationRepository;
+
+    @Mock
+    IncomeService  incomeService;
 
     @Mock
     PropertyService propertyService;
@@ -82,5 +93,35 @@ class ReservationServiceUTest {
         reservationService.getLastReservations(propertyId,nbReservations);
         //Then
         Mockito.verify(reservationRepository,Mockito.times(1)).findReservationByMultipleCriteria(new ReservationCriteria().property(property).pageSize(nbReservations).pageNumber(1));
+    }
+
+    @Test
+    void updateReservationTest() {
+        //Given
+        Property property = EntityBuilder.buildProperty("test").id(12312);
+        Income income = EntityBuilder.buildIncome(1234567,property);
+        Reservation reservation = EntityBuilder.buildDefaultReservation(property,income).id(1);
+        Reservation reservationBody = new Reservation().fromDate(LocalDate.MAX).toDate(LocalDate.MAX).reservationDate(LocalDate.MAX);
+        Reservation updatedReservation = reservation.fromDate(LocalDate.MAX).toDate(LocalDate.MAX).reservationDate(LocalDate.MAX);
+
+        //When
+        Mockito.when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
+        reservationService.updateReservation(reservation.getId(),reservationBody,9999);
+        //Then
+        Mockito.verify(reservationRepository,Mockito.times(1)).save(updatedReservation);
+    }
+
+    @Test
+    void addReservationTest() {
+        //Given
+        Property property = EntityBuilder.buildProperty("test").id(12312);
+        Income income = EntityBuilder.buildIncome(1234567,property);
+        Reservation reservation = EntityBuilder.buildDefaultReservation(property,income);
+        //When
+        Mockito.when(propertyService.getById(property.getId())).thenReturn(property);
+        Mockito.when(incomeService.getIncomeById(income.getId())).thenReturn(income);
+        reservationService.addReservation(reservation,9999);
+        //Then
+        Mockito.verify(reservationRepository,Mockito.times(1)).save(reservation);
     }
 }
