@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.easyimmo.common.config.jwt.JwtTokenVerifier;
 import com.easyimmo.common.config.jwt.JwtUserNameAndPasswordAuthenticationFilter;
@@ -60,11 +62,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-    //@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-
 
     @Bean
     public CorsFilter corsFilter() {
@@ -80,6 +77,16 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod("PUT");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:4200","https://easy-immo-front.herokuapp.com/");
+            }
+        };
     }
 
     @Bean
