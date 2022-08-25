@@ -23,6 +23,7 @@ public class User {
     private String password;
 
     public User() {
+        //Empty constructor
     }
 
     public Integer getId() {
@@ -33,6 +34,11 @@ public class User {
         this.id = id;
     }
 
+    public User id(Integer id){
+        setId(id);
+        return this;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -41,11 +47,22 @@ public class User {
         this.username = username;
     }
 
+    public User username(String username){
+        setUsername(username);
+        return this;
+    }
+
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User password(String password){
+        setPassword(password);
+        return this;
     }
 }

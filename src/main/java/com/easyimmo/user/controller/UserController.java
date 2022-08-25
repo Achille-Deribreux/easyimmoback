@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easyimmo.user.dto.UserBody;
 import com.easyimmo.user.model.User;
 import com.easyimmo.user.service.UserService;
+import com.easyimmo.user.utils.UserConverter;
 
 @RestController
 @RequestMapping("/user")
@@ -21,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        User addedUser = userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody UserBody user){
+        User addedUser = userService.addUser(UserConverter.convertToUser(user));
         return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
     }
 }
