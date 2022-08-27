@@ -15,9 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.easyimmo.common.config.jwt.JwtTokenVerifier;
 import com.easyimmo.common.config.jwt.JwtUserNameAndPasswordAuthenticationFilter;
@@ -25,7 +23,7 @@ import com.easyimmo.common.config.jwt.JwtUserNameAndPasswordAuthenticationFilter
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebConfig extends WebSecurityConfigurerAdapter {
+public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
@@ -40,12 +38,13 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //httpSecurity.authorizeRequests().antMatchers("/").permitAll();
         http.csrf().disable()
+                .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUserNameAndPasswordAuthenticationFilter(authenticationManager()))
                 .addFilterAfter(new JwtTokenVerifier(),JwtUserNameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/*login*", "/user/register").permitAll()
+                .antMatchers("/*login*", "/user/register","*swagger*").permitAll()
                 .anyRequest().authenticated();
     }
 
@@ -77,16 +76,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod("PUT");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200","https://easy-immo-front.herokuapp.com/");
-            }
-        };
     }
 
     @Bean
