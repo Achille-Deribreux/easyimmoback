@@ -121,14 +121,14 @@ public class Converter {
 
 
      public Property convert(PropertyDto propertyDto){
-        return new Property(
-                propertyDto.getId(),
-                propertyDto.getAddress(),
-                propertyDto.getName(),
-                propertyDto.getType(),
-                propertyDto.getRentType(),
-                propertyDto.getPrixAchat()
-        );
+        return new Property()
+                .id(propertyDto.getId())
+                .address(propertyDto.getAddress())
+                .name(propertyDto.getName())
+                .type(propertyDto.getType())
+                .rentType(propertyDto.getRentType())
+                .buyPrice(propertyDto.getPrixAchat())
+                .userId(propertyDto.getUserId());
     }
 
      public PropertyDto convert(Property property){

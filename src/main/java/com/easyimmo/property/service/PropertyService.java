@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.easyimmo.common.config.UserDetailsImpl;
 import com.easyimmo.common.exception.PropertyNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.property.dto.PropertyCriteria;
@@ -35,7 +36,9 @@ public class PropertyService implements IPropertyService {
 
     @Override
     public List<Property> getAll(PropertyCriteria propertyCriteria) {
-        logger.info("get all from repository");
+        ThreadLocal<UserDetailsImpl> threadLocal = new ThreadLocal<>();
+        UserDetailsImpl test = threadLocal.get();
+        logger.info("get all from repository {}",test);
         return propertyRepository.findPropertyByMultipleCriteria(propertyCriteria);
     }
 
