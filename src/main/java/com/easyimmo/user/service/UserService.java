@@ -3,8 +3,10 @@ package com.easyimmo.user.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.easyimmo.common.exception.NotBelongToUserException;
 import com.easyimmo.common.exception.UserAlreadyExistsException;
 import com.easyimmo.common.exception.UserNotFoundException;
+import com.easyimmo.common.utils.CurrentUser;
 import com.easyimmo.user.model.User;
 import com.easyimmo.user.repository.UserRepository;
 
@@ -32,5 +34,11 @@ public class UserService {
 
     public Integer getUserId(String username){
         return getByUsername(username).getId();
+    }
+
+    public void checkUser(Integer entityId){
+        Integer userId = getUserId(CurrentUser.getCurrentUserName());
+        if(!userId.equals(entityId))
+            throw new NotBelongToUserException(String.valueOf(userId));
     }
 }

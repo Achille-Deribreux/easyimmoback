@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.easyimmo.common.exception.NotBelongToUserException;
 import com.easyimmo.common.exception.PropertyNotFoundException;
 import com.easyimmo.common.utils.CurrentUser;
 import com.easyimmo.common.utils.CustomValidator;
@@ -37,7 +36,7 @@ public class PropertyService implements IPropertyService {
     public Property getById(Integer id) {
         logger.info("search in repository {}",id);
         Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id" +id));
-        checkUser(property);
+        userService.checkUser(property.getUserId());
         return property;
     }
 
@@ -68,13 +67,7 @@ public class PropertyService implements IPropertyService {
     public void deleteById(Integer id) {
         logger.info("delete property for id : {}", id);
         Property property = getById(id);
-        checkUser(property);
+        userService.checkUser(property.getUserId());
         propertyRepository.delete(property);
-    }
-
-    private void checkUser(Property property){
-        Integer userId = userService.getUserId(CurrentUser.getCurrentUserName());
-        if(!userId.equals(property.getUserId()))
-            throw new NotBelongToUserException(String.valueOf(userId));
     }
 }

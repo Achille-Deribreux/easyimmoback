@@ -50,7 +50,7 @@ class PropertyServiceUTest {
         //Given
         Integer id = 1;
         //When
-        Mockito.when(userService.getUserId("test")).thenReturn(1);
+        Mockito.doNothing().when(userService).checkUser(Mockito.anyInt());
         Mockito.when(propertyRepository.findById(id)).thenReturn(Optional.of(new Property().userId(1)));
         propertyService.getById(id);
         //Then
@@ -107,7 +107,7 @@ class PropertyServiceUTest {
         Integer id = 1;
         Property property = EntityBuilder.buildProperty("test");
         //When
-        Mockito.when(userService.getUserId("test")).thenReturn(1);
+        Mockito.doNothing().when(userService).checkUser(Mockito.anyInt());
         Mockito.when(propertyRepository.findById(id)).thenReturn(Optional.of(property));
         propertyService.deleteById(id);
         //Then
