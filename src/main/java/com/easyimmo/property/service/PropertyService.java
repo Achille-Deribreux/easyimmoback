@@ -6,13 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.easyimmo.common.config.UserDetailsImpl;
+import com.easyimmo.common.exception.NotBelongToUserException;
 import com.easyimmo.common.exception.PropertyNotFoundException;
+import com.easyimmo.common.utils.CurrentUser;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.property.dto.PropertyCriteria;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.repository.PropertyRepository;
 import com.easyimmo.property.util.UpdatePropertyHelper;
+import com.easyimmo.user.service.UserService;
 
 @Service
 public class PropertyService implements IPropertyService {
@@ -23,22 +25,26 @@ public class PropertyService implements IPropertyService {
 
     private final CustomValidator validator;
 
-    public PropertyService(PropertyRepository propertyRepository, CustomValidator customValidator) {
+    private final UserService userService;
+
+    public PropertyService(PropertyRepository propertyRepository, CustomValidator validator, UserService userService) {
         this.propertyRepository = propertyRepository;
-        this.validator = customValidator;
+        this.validator = validator;
+        this.userService = userService;
     }
 
     @Override
     public Property getById(Integer id) {
         logger.info("search in repository {}",id);
-        return propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id" +id));
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id" +id));
+        checkUser(property);
+        return property;
     }
 
     @Override
     public List<Property> getAll(PropertyCriteria propertyCriteria) {
-        ThreadLocal<UserDetailsImpl> threadLocal = new ThreadLocal<>();
-        UserDetailsImpl test = threadLocal.get();
-        logger.info("get all from repository {}",test);
+        logger.info("get all from repository");
+        propertyCriteria.userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         return propertyRepository.findPropertyByMultipleCriteria(propertyCriteria);
     }
 
@@ -52,6 +58,7 @@ public class PropertyService implements IPropertyService {
 
     @Override
     public Property addProperty(Property property) {
+        property.userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         validator.validate(property);
         logger.info("add property with name : {}", property.getName());
         return propertyRepository.save(property);
@@ -61,6 +68,13 @@ public class PropertyService implements IPropertyService {
     public void deleteById(Integer id) {
         logger.info("delete property for id : {}", id);
         Property property = getById(id);
+        checkUser(property);
         propertyRepository.delete(property);
+    }
+
+    private void checkUser(Property property){
+        Integer userId = userService.getUserId(CurrentUser.getCurrentUserName());
+        if(!userId.equals(property.getUserId()))
+            throw new NotBelongToUserException(String.valueOf(userId));
     }
 }

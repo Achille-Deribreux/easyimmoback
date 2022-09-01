@@ -36,7 +36,8 @@ public class EntityBuilder {
                 .address("address")
                 .type(Property.Type.HOUSE)
                 .rentType(Property.RentType.LONG)
-                .buyPrice(10000);
+                .buyPrice(10000)
+                .userId(1);
     }
 
     public static Income buildIncome(Integer amount, Property property){
