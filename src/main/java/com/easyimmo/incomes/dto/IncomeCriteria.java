@@ -17,9 +17,7 @@ public class IncomeCriteria {
     private Income.IncomeType type;
     private Integer pageSize;
     private Integer pageNumber;
-
-    public IncomeCriteria() {
-    }
+    private Integer userId;
 
     public String getPropertyName() {
         return propertyName;
@@ -148,6 +146,19 @@ public class IncomeCriteria {
 
     public IncomeCriteria pageNumber(Integer pageNumber){
         setPageNumber(pageNumber);
+        return this;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public IncomeCriteria userId(Integer userId){
+        setUserId(userId);
         return this;
     }
 
