@@ -6,15 +6,17 @@ public class BankLoanSummary {
     private Integer dueAmount;
     private Integer refundedAmount;
 
-    public BankLoanSummary() {
-    }
-
     public Integer getTotalAmount() {
         return totalAmount;
     }
 
     public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public BankLoanSummary totalAmount(Integer totalAmount){
+        setTotalAmount(totalAmount);
+        return this;
     }
 
     public Integer getDueAmount() {
@@ -25,6 +27,11 @@ public class BankLoanSummary {
         this.dueAmount = dueAmount;
     }
 
+    public BankLoanSummary dueAmount(Integer dueAmount){
+        setDueAmount(dueAmount);
+        return this;
+    }
+
     public Integer getRefundedAmount() {
         return refundedAmount;
     }
@@ -32,6 +39,12 @@ public class BankLoanSummary {
     public void setRefundedAmount(Integer refundedAmount) {
         this.refundedAmount = refundedAmount;
     }
+
+    public BankLoanSummary refundedAmount(Integer refundedAmount){
+        setRefundedAmount(refundedAmount);
+        return this;
+    }
+
 
     @Override
     public String toString() {

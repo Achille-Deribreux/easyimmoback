@@ -23,7 +23,8 @@ public class ExceptionsHandler {
             ReservationNotFoundException.class,
             PropertyNotFoundException.class,
             FeeNotFoundException.class,
-            IncomeNotFoundException.class
+            IncomeNotFoundException.class,
+            BankloanNotFoundException.class
     })
     public ResponseEntity<Object>handleEntityNotFoundException(InvalidEntityException e){
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());

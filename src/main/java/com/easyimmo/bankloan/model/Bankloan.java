@@ -1,5 +1,6 @@
 package com.easyimmo.bankloan.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -27,13 +28,17 @@ public class Bankloan {
     @NotNull
     private Integer totalAmount;
 
-    @Column(name="dueAmount")
+    @Column(name="startDate")
     @NotNull
-    private Integer dueAmount;
+    private LocalDate startDate;
 
-    @Column(name="refundedAmount")
+    @Column(name="endDate")
     @NotNull
-    private Integer refundedAmount;
+    private LocalDate endDate;
+
+    @Column(name = "monthlyPayment")
+    @NotNull
+    private Integer monthlyPayment;
 
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
@@ -48,6 +53,11 @@ public class Bankloan {
         this.id = id;
     }
 
+    public Bankloan id(Integer id){
+        setId(id);
+        return this;
+    }
+
     public Integer getTotalAmount() {
         return totalAmount;
     }
@@ -56,20 +66,48 @@ public class Bankloan {
         this.totalAmount = totalAmount;
     }
 
-    public Integer getDueAmount() {
-        return dueAmount;
+    public Bankloan totalAmount(Integer totalAmount){
+        setTotalAmount(totalAmount);
+        return this;
     }
 
-    public void setDueAmount(Integer dueAmount) {
-        this.dueAmount = dueAmount;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public Integer getRefundedAmount() {
-        return refundedAmount;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setRefundedAmount(Integer refundedAmount) {
-        this.refundedAmount = refundedAmount;
+    public Bankloan startDate(LocalDate startDate){
+        setStartDate(startDate);
+        return this;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public Bankloan endDate(LocalDate endDate){
+        setEndDate(endDate);
+        return this;
+    }
+
+    public Integer getMonthlyPayment() {
+        return monthlyPayment;
+    }
+
+    public void setMonthlyPayment(Integer monthlyPayment) {
+        this.monthlyPayment = monthlyPayment;
+    }
+
+    public Bankloan monthlyPayment(Integer monthlyPayment){
+        setMonthlyPayment(monthlyPayment);
+        return this;
     }
 
     public Property getProperty() {
@@ -80,16 +118,21 @@ public class Bankloan {
         this.property = property;
     }
 
+    public Bankloan property(Property property){
+        setProperty(property);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bankloan bankloan = (Bankloan) o;
-        return Objects.equals(id, bankloan.id) && Objects.equals(totalAmount, bankloan.totalAmount) && Objects.equals(dueAmount, bankloan.dueAmount) && Objects.equals(refundedAmount, bankloan.refundedAmount);
+        return Objects.equals(id, bankloan.id) && Objects.equals(totalAmount, bankloan.totalAmount) && Objects.equals(startDate, bankloan.startDate) && Objects.equals(endDate, bankloan.endDate) && Objects.equals(monthlyPayment, bankloan.monthlyPayment) && Objects.equals(property, bankloan.property);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalAmount, dueAmount, refundedAmount);
+        return Objects.hash(id, totalAmount, startDate, endDate, monthlyPayment, property);
     }
 }
