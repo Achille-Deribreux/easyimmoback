@@ -4,12 +4,17 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 
+import com.easyimmo.AuthenticationMock;
 import com.easyimmo.EntityBuilder;
 import com.easyimmo.common.exception.FeeNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
@@ -18,6 +23,7 @@ import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.repository.FeeRepository;
 import com.easyimmo.fees.service.FeeService;
 import com.easyimmo.property.model.Property;
+import com.easyimmo.user.service.UserService;
 
 @SpringBootTest
 class FeeServiceUTest {
@@ -28,15 +34,25 @@ class FeeServiceUTest {
     @Mock
     CustomValidator validator;
 
+    @Mock
+    UserService userService;
+
     @InjectMocks
     FeeService feeService;
+
+    @BeforeEach
+    void setUp() {
+        SecurityContext securityContext = new SecurityContextImpl();
+        securityContext.setAuthentication(AuthenticationMock.getAuthenticationMock());
+        SecurityContextHolder.setContext(securityContext);
+    }
 
     @Test
     void getFeeByIdTest() {
      //Given
         Integer id = 1;
         //When
-        Mockito.when(feeRepository.findById(id)).thenReturn(Optional.of(new Fee()));
+        Mockito.when(feeRepository.findById(id)).thenReturn(Optional.of(new Fee().property(new Property().userId(1))));
         feeService.getFeeById(id);
         //Then
         Mockito.verify(feeRepository,Mockito.times(1)).findById(id);
@@ -64,9 +80,10 @@ class FeeServiceUTest {
                 .pageNumber(1)
                 .pageSize(10);
         //When
+        Mockito.when(userService.getUserId("test")).thenReturn(1);
         feeService.getAllFees(criteria);
         //Then
-        Mockito.verify(feeRepository, Mockito.times(1)).findFeeByMultipleCriteria(criteria);
+        Mockito.verify(feeRepository, Mockito.times(1)).findFeeByMultipleCriteria(criteria.userId(1));
     }
 
     @Test

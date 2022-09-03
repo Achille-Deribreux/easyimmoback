@@ -15,9 +15,7 @@ public class FeeCriteria {
     private Integer propertyId;
     private Integer pageSize;
     private Integer pageNumber;
-
-    public FeeCriteria() {
-    }
+    private Integer userId;
 
     public String getPropertyName() {
         return propertyName;
@@ -146,6 +144,19 @@ public class FeeCriteria {
 
     public FeeCriteria pageNumber(Integer pageNumber){
         setPageNumber(pageNumber);
+        return this;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public FeeCriteria userId (Integer userId){
+        setUserId(userId);
         return this;
     }
 

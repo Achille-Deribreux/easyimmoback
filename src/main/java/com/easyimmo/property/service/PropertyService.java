@@ -67,7 +67,6 @@ public class PropertyService implements IPropertyService {
     public void deleteById(Integer id) {
         logger.info("delete property for id : {}", id);
         Property property = getById(id);
-        userService.checkUser(property.getUserId());
         propertyRepository.delete(property);
     }
 }

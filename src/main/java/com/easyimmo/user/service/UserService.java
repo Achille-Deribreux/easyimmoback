@@ -36,9 +36,9 @@ public class UserService {
         return getByUsername(username).getId();
     }
 
-    public void checkUser(Integer entityId){
+    public void checkUser(Integer entityUserId){
         Integer userId = getUserId(CurrentUser.getCurrentUserName());
-        if(!userId.equals(entityId))
+        if(!userId.equals(entityUserId))
             throw new NotBelongToUserException(String.valueOf(userId));
     }
 }
