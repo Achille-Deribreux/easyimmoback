@@ -31,10 +31,11 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
         Root<Reservation> reservationRoot = criteriaQuery.from(Reservation.class);
         Join<Reservation, Property> propertyJoin = reservationRoot.join("property", JoinType.LEFT);
         BasicUtils.ConditionalList<Predicate> conditionalList = BasicUtils.ConditionalList.of(new ArrayList<>());
-        conditionalList.add(reservationCriteria.getProperty()!=null,()->criteriaBuilder.equal(propertyJoin.get("id"),reservationCriteria.getProperty().getId()));
-        conditionalList.add(reservationCriteria.getReservationDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("reservationDate"),reservationCriteria.getReservationDate()));
-        conditionalList.add(reservationCriteria.getFromDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("fromDate"),reservationCriteria.getFromDate()));
-        conditionalList.add(reservationCriteria.getToDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("toDate"),reservationCriteria.getToDate()));
+        conditionalList.add(reservationCriteria.getProperty()!=null,()->criteriaBuilder.equal(propertyJoin.get("id"),reservationCriteria.getProperty().getId()))
+        .add(reservationCriteria.getReservationDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("reservationDate"),reservationCriteria.getReservationDate()))
+        .add(reservationCriteria.getUserId()!=null,()->criteriaBuilder.equal((criteriaBuilder.upper(propertyJoin.get("userId"))),reservationCriteria.getUserId()))
+        .add(reservationCriteria.getFromDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("fromDate"),reservationCriteria.getFromDate()))
+        .add(reservationCriteria.getToDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("toDate"),reservationCriteria.getToDate()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(reservationRoot.get("fromDate")));
         TypedQuery<Reservation> typedQuery = entityManager.createQuery(criteriaQuery);

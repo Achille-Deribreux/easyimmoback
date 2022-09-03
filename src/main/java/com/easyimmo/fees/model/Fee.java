@@ -25,6 +25,7 @@ public class Fee {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
     @NotNull

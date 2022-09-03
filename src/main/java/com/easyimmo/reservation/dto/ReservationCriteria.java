@@ -13,6 +13,7 @@ public class ReservationCriteria {
     private LocalDate reservationDate;
     private Integer pageSize;
     private Integer pageNumber;
+    private Integer userId;
 
     public ReservationCriteria() {
     }
@@ -92,6 +93,19 @@ public class ReservationCriteria {
 
     public ReservationCriteria pageNumber(Integer pageNumber) {
         this.pageNumber = pageNumber;
+        return this;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public ReservationCriteria userId(Integer userId){
+        setUserId(userId);
         return this;
     }
 

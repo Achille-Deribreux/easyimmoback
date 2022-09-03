@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.easyimmo.common.exception.ReservationNotFoundException;
+import com.easyimmo.common.utils.CurrentUser;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.service.IncomeService;
@@ -15,6 +16,7 @@ import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.UpdateReservationHelper;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.repository.ReservationRepository;
+import com.easyimmo.user.service.UserService;
 
 @Service
 public class ReservationService implements IReservationService {
@@ -27,24 +29,30 @@ public class ReservationService implements IReservationService {
 
     private final IncomeService incomeService;
 
+    private final UserService userService;
+
     private final CustomValidator validator;
 
-    public ReservationService(ReservationRepository reservationRepository, PropertyService propertyService, IncomeService incomeService, CustomValidator validator) {
+    public ReservationService(ReservationRepository reservationRepository, PropertyService propertyService, IncomeService incomeService, UserService userService, CustomValidator validator) {
         this.reservationRepository = reservationRepository;
         this.propertyService = propertyService;
         this.incomeService = incomeService;
+        this.userService = userService;
         this.validator = validator;
     }
 
     @Override
     public Reservation getById(Integer id) {
         logger.info("search in repository {}",id);
-        return reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("id" +id));
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("id" +id));
+        userService.checkUser(reservation.getProperty().getUserId());
+        return reservation;
     }
 
     @Override
     public List<Reservation> getAll(ReservationCriteria criteria) {
         logger.info("get all from repository with criteria {}",criteria);
+        criteria.userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         return reservationRepository.findReservationByMultipleCriteria(criteria);
     }
 
@@ -84,7 +92,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public List<Reservation> getLastReservations(Integer propertyId, Integer nbReservations) {
-        ReservationCriteria reservationCriteria = new ReservationCriteria().property(propertyService.getById(propertyId)).pageSize(nbReservations).pageNumber(1);
+        ReservationCriteria reservationCriteria = new ReservationCriteria().property(propertyService.getById(propertyId)).pageSize(nbReservations).pageNumber(1).userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         return reservationRepository.findReservationByMultipleCriteria(reservationCriteria);
     }
 }

@@ -4,12 +4,17 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 
+import com.easyimmo.AuthenticationMock;
 import com.easyimmo.EntityBuilder;
 import com.easyimmo.common.exception.ReservationNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
@@ -21,6 +26,7 @@ import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.repository.ReservationRepository;
 import com.easyimmo.reservation.service.ReservationService;
+import com.easyimmo.user.service.UserService;
 
 @SpringBootTest
 class ReservationServiceUTest {
@@ -37,17 +43,25 @@ class ReservationServiceUTest {
     @Mock
     PropertyService propertyService;
 
+    @Mock
+    UserService userService;
+
     @InjectMocks
     ReservationService reservationService;
 
-
+    @BeforeEach
+    void setUp() {
+        SecurityContext securityContext = new SecurityContextImpl();
+        securityContext.setAuthentication(AuthenticationMock.getAuthenticationMock());
+        SecurityContextHolder.setContext(securityContext);
+    }
 
     @Test
     void getByIdTest() {
         //Given
         Integer id = 1;
         //When
-        Mockito.when(reservationRepository.findById(id)).thenReturn(Optional.of(new Reservation()));
+        Mockito.when(reservationRepository.findById(id)).thenReturn(Optional.of(new Reservation().property(new Property().userId(1))));
         reservationService.getById(id);
         //Then
         Mockito.verify(reservationRepository,Mockito.times(1)).findById(id);
@@ -66,6 +80,7 @@ class ReservationServiceUTest {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().pageNumber(1).pageSize(10);
         //When
+        Mockito.when(userService.getUserId("test")).thenReturn(1);
         reservationService.getAll(reservationCriteria);
         //Then
         Mockito.verify(reservationRepository,Mockito.times(1)).findReservationByMultipleCriteria(reservationCriteria);
@@ -76,6 +91,7 @@ class ReservationServiceUTest {
         //Given
         Reservation reservation = new Reservation().id(1);
         //When
+        Mockito.when(userService.getUserId("test")).thenReturn(1);
         Mockito.when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         reservationService.deleteById(reservation.getId());
         //Then
@@ -89,6 +105,7 @@ class ReservationServiceUTest {
         Property property = new Property().id(propertyId).address("address").type(Property.Type.APPARTMENT).rentType(Property.RentType.LONG);
         Integer nbReservations = 3;
         //When
+        Mockito.when(userService.getUserId("test")).thenReturn(1);
         Mockito.when(propertyService.getById(propertyId)).thenReturn(property);
         reservationService.getLastReservations(propertyId,nbReservations);
         //Then
@@ -105,6 +122,7 @@ class ReservationServiceUTest {
         Reservation updatedReservation = reservation.fromDate(LocalDate.MAX).toDate(LocalDate.MAX).reservationDate(LocalDate.MAX);
 
         //When
+        Mockito.when(userService.getUserId("test")).thenReturn(1);
         Mockito.when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
         reservationService.updateReservation(reservation.getId(),reservationBody,9999);
         //Then
