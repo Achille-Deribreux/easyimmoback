@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.easyimmo.bankloan.dto.BankLoanSummary;
+import com.easyimmo.bankloan.service.BankloanService;
 import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.dto.FeeSummary;
@@ -31,20 +31,23 @@ import com.easyimmo.reservation.service.ReservationService;
 @Component
 public class Converter {
 
-    private PropertyService propertyService;
+    private final PropertyService propertyService;
 
-    private FeeService feeService;
+    private final FeeService feeService;
 
-    private IncomeService incomeService;
+    private final IncomeService incomeService;
 
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
+
+    private final BankloanService bankloanService;
 
 
-    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService , ReservationService reservationService) {
+    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService, ReservationService reservationService, BankloanService bankloanService) {
         this.propertyService = propertyService;
         this.feeService = feeService;
         this.incomeService = incomeService;
         this.reservationService = reservationService;
+        this.bankloanService = bankloanService;
     }
 
     /**
@@ -158,7 +161,7 @@ public class Converter {
                 .type(propertyTypeMap.toFront(property.getType()))
                 .rentType(propertyRentTypeMap.toFront(property.getRentType()))
                 .buyPrice(property.getBuyPrice())
-                .bankLoanSummary(new BankLoanSummary())
+                .bankLoanSummary(bankloanService.getBankLoanSummaryByProperty(property))
                 .yearlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusYears(1)))
                 .yearlyIncomes(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusYears(1)))
                 .monthlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusMonths(1)))

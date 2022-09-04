@@ -2,14 +2,17 @@ package com.easyimmo.bankloan.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.bankloan.model.Bankloan;
 import com.easyimmo.bankloan.repository.BankLoanRepository;
 import com.easyimmo.common.exception.BankloanNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
+import com.easyimmo.property.model.Property;
 import com.easyimmo.user.service.UserService;
 
+@Service
 public class BankloanService implements IBankloanService{
 
     private final Logger logger = LoggerFactory.getLogger(BankloanService.class);
@@ -35,9 +38,9 @@ public class BankloanService implements IBankloanService{
     }
 
     @Override
-    public BankLoanSummary getBankLoanSummaryById(Integer id) {
-        logger.info("get bankloan summary with id {}",id);
-        Bankloan bankloan = getById(id);
+    public BankLoanSummary getBankLoanSummaryByProperty(Property property) {
+        logger.info("get bankloan summary with property id {}",property.getId());
+        Bankloan bankloan = bankLoanRepository.findBankloanByProperty(property).orElseThrow(()-> new BankloanNotFoundException("property id : "+property.getId()));
         Integer months = bankloan.getEndDate().getMonthValue() - bankloan.getStartDate().getMonthValue();
         Integer refundedAmount = bankloan.getTotalAmount() - (bankloan.getMonthlyPayment() * months);
         Integer dueAmount = bankloan.getTotalAmount() - refundedAmount;
