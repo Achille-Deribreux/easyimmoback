@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.easyimmo.bankloan.dto.BankloanBody;
+import com.easyimmo.bankloan.dto.BankloanDetails;
+import com.easyimmo.bankloan.model.Bankloan;
 import com.easyimmo.bankloan.service.BankloanService;
 import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
@@ -267,5 +270,27 @@ public class Converter {
                 .reservationDate(reservationDate)
                 .pageSize(pageSize)
                 .pageNumber(pageNr);
+    }
+
+    /**
+     * BANK LOAN CONVERTERS
+     */
+    public Bankloan convertToBankloan(BankloanBody bankloanBody){
+        return new Bankloan()
+                .id(bankloanBody.getId())
+                .totalAmount(bankloanBody.getTotalAmount())
+                .startDate(bankloanBody.getStartDate())
+                .endDate(bankloanBody.getEndDate())
+                .monthlyPayment(bankloanBody.getMonthlyPayment())
+                .property(bankloanBody.getPropertyId()!=null?propertyService.getById(bankloanBody.getPropertyId()):null);
+    }
+
+    public BankloanDetails convertToBankloanDetails(Bankloan bankloan){
+        return new BankloanDetails()
+                .id(bankloan.getId())
+                .totalAmount(bankloan.getTotalAmount())
+                .startDate(bankloan.getStartDate())
+                .endDate(bankloan.getEndDate())
+                .monthlyPayment(bankloan.getMonthlyPayment());
     }
 }
