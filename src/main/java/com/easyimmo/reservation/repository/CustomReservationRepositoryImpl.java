@@ -33,7 +33,7 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
         BasicUtils.ConditionalList<Predicate> conditionalList = BasicUtils.ConditionalList.of(new ArrayList<>());
         conditionalList.add(reservationCriteria.getProperty()!=null,()->criteriaBuilder.equal(propertyJoin.get("id"),reservationCriteria.getProperty().getId()))
         .add(reservationCriteria.getReservationDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("reservationDate"),reservationCriteria.getReservationDate()))
-        .add(reservationCriteria.getUserId()!=null,()->criteriaBuilder.equal((criteriaBuilder.upper(propertyJoin.get("userId"))),reservationCriteria.getUserId()))
+        .add(reservationCriteria.getUserId()!=null,()->criteriaBuilder.equal(propertyJoin.get("userId"),reservationCriteria.getUserId()))
         .add(reservationCriteria.getFromDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("fromDate"),reservationCriteria.getFromDate()))
         .add(reservationCriteria.getToDate()!=null,()->criteriaBuilder.equal(reservationRoot.get("toDate"),reservationCriteria.getToDate()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));

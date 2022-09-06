@@ -36,7 +36,7 @@ public class CustomFeeRepositoryImpl implements CustomFeeRepository{
         .add(feeCriteria.getSupplier()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(feeRoot.get("supplier"))),toLike(feeCriteria.getSupplier())))
         .add(feeCriteria.getDescription()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(feeRoot.get("description"))),toLike(feeCriteria.getDescription())))
         .add(feeCriteria.getPropertyName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyJoin.get("name"))),toLike(feeCriteria.getPropertyName())))
-        .add(feeCriteria.getUserId()!=null,()->criteriaBuilder.equal((criteriaBuilder.upper(propertyJoin.get("userId"))),feeCriteria.getUserId()))
+        .add(feeCriteria.getUserId()!=null,()->criteriaBuilder.equal(propertyJoin.get("userId"),feeCriteria.getUserId()))
         .add(feeCriteria.getPropertyId()!=null,()->criteriaBuilder.equal((propertyJoin.get("id")),feeCriteria.getPropertyId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(feeRoot.get("date")));

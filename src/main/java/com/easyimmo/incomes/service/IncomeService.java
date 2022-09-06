@@ -73,7 +73,7 @@ public class IncomeService implements IIncomeService{
     @Override
     public Integer getTotalIncomesFrom(Integer propertyId, LocalDate fromDate) {
         logger.info("get total incomes from property {} from date {}",propertyId,fromDate);
-        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).minDate(fromDate).userId(userService.getUserId(CurrentUser.getCurrentUserName()));;
+        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).minDate(fromDate).userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         List<Income> incomeList =incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);
         return incomeList.stream().mapToInt(Income::getAmount).sum();
     }
@@ -81,7 +81,7 @@ public class IncomeService implements IIncomeService{
     @Override
     public List<Income> getLastIncomes(Integer propertyId, Integer nbIncomes) {
         logger.info("get last incomes from property {}",propertyId);
-        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes).pageNumber(1).userId(userService.getUserId(CurrentUser.getCurrentUserName()));;
+        IncomeCriteria incomeCriteria = new IncomeCriteria().propertyId(propertyId).pageSize(nbIncomes).pageNumber(1).userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         return incomeRepository.findIncomesByMultipleCriteria(incomeCriteria);
     }
 }

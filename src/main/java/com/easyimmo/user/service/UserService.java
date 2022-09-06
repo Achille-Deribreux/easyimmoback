@@ -27,7 +27,7 @@ public class UserService {
 
     public User addUser (User user){
         if(userRepository.findByUsername(user.getUsername()).isPresent())
-            throw new UserAlreadyExistsException(user.getUsername());
+            throw new UserAlreadyExistsException(" ");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
