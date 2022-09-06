@@ -40,7 +40,9 @@ public class BankloanService implements IBankloanService{
     @Override
     public BankLoanSummary getBankLoanSummaryByProperty(Property property) {
         logger.info("get bankloan summary with property id {}",property.getId());
-        Bankloan bankloan = bankLoanRepository.findBankloanByProperty(property).orElseThrow(()-> new BankloanNotFoundException("property id : "+property.getId()));
+        Bankloan bankloan = bankLoanRepository.findBankloanByProperty(property).orElse(null);
+        if(bankloan == null)
+            return null;
         Integer months = bankloan.getEndDate().getMonthValue() - bankloan.getStartDate().getMonthValue();
         Integer refundedAmount = bankloan.getTotalAmount() - (bankloan.getMonthlyPayment() * months);
         Integer dueAmount = bankloan.getTotalAmount() - refundedAmount;
