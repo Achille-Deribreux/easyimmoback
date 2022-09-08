@@ -14,7 +14,7 @@ public class ExceptionsHandler {
             InvalidEntityException.class,
             UserAlreadyExistsException.class,
             CannotDeleteException.class})
-    public ResponseEntity<Object>handleBadRequestException(InvalidEntityException e){
+    public ResponseEntity<Object>handleBadRequestException(RuntimeException e){
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
         return new ResponseEntity<>(customErrorResponse,HttpStatus.BAD_REQUEST);
     }
@@ -27,7 +27,7 @@ public class ExceptionsHandler {
             IncomeNotFoundException.class,
             BankloanNotFoundException.class
     })
-    public ResponseEntity<Object>handleEntityNotFoundException(InvalidEntityException e){
+    public ResponseEntity<Object>handleEntityNotFoundException(RuntimeException e){
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
         return new ResponseEntity<>(customErrorResponse,HttpStatus.NOT_FOUND);
     }
