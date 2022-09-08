@@ -3,7 +3,6 @@ package com.easyimmo.incomes.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -55,7 +54,7 @@ public class Income {
     @NotNull
     private IncomeType incomeType;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id", referencedColumnName = "income_id")
     private Reservation reservation;
 
