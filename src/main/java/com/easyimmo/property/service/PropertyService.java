@@ -35,7 +35,7 @@ public class PropertyService implements IPropertyService {
     @Override
     public Property getById(Integer id) {
         logger.info("search in repository {}",id);
-        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id" +id));
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id " +id));
         userService.checkUser(property.getUserId());
         return property;
     }

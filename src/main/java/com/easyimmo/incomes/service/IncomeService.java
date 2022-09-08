@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.easyimmo.common.exception.CannotDeleteException;
 import com.easyimmo.common.exception.IncomeNotFoundException;
 import com.easyimmo.common.utils.CurrentUser;
 import com.easyimmo.common.utils.CustomValidator;
@@ -67,6 +68,9 @@ public class IncomeService implements IIncomeService{
     public void deleteById(Integer id) {
         logger.info("delete income from repository {}",id);
         Income incomeToDelete = getIncomeById(id);
+        if(incomeToDelete.getReservation()!=null){
+            throw new CannotDeleteException("cannot delete Income with id : "+incomeToDelete.getId().toString()+" because it's related to a reservation with id : " +incomeToDelete.getReservation().getId().toString());
+        }
         incomeRepository.delete(incomeToDelete);
     }
 

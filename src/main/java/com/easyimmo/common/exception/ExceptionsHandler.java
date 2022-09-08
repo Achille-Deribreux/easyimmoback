@@ -12,7 +12,8 @@ public class ExceptionsHandler {
 
     @ExceptionHandler({
             InvalidEntityException.class,
-            UserAlreadyExistsException.class})
+            UserAlreadyExistsException.class,
+            CannotDeleteException.class})
     public ResponseEntity<Object>handleBadRequestException(InvalidEntityException e){
         CustomErrorResponse customErrorResponse = new CustomErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
         return new ResponseEntity<>(customErrorResponse,HttpStatus.BAD_REQUEST);

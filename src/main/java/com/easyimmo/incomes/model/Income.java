@@ -3,18 +3,23 @@ package com.easyimmo.incomes.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.easyimmo.property.model.Property;
+import com.easyimmo.reservation.model.Reservation;
+
 @Entity
 @Table(name="income")
 public class Income {
@@ -49,6 +54,10 @@ public class Income {
     @Enumerated
     @NotNull
     private IncomeType incomeType;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name="id", referencedColumnName = "income_id")
+    private Reservation reservation;
 
     public Income() {
     }
@@ -137,6 +146,19 @@ public class Income {
 
     public Income incomeType(IncomeType incomeType) {
         this.incomeType = incomeType;
+        return this;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    public Income reservation(Reservation reservation){
+        setReservation(reservation);
         return this;
     }
 

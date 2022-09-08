@@ -104,7 +104,7 @@ public class ReservationController {
      * @param id id of the reservation to delete
      * @return response entity with the deleted reservation and status code 200 if everything is ok
      */
-    @DeleteMapping(value="/delete")
+    @DeleteMapping(value="/deleteById")
     public ResponseEntity<String> deleteReservation(@RequestParam(value="id") Integer id) {
         logger.info("delete request received at reservation/delete for id : {}", id);
         reservationService.deleteById(id);
