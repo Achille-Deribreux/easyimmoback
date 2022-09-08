@@ -44,7 +44,18 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .addFilter(new JwtUserNameAndPasswordAuthenticationFilter(authenticationManager()))
                 .addFilterAfter(new JwtTokenVerifier(),JwtUserNameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/*login*", "/user/register","*swagger*").permitAll()
+                .antMatchers("/*login*", "/user/register",
+                        "/v2/api-docs",
+                        "/swagger-resources",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**"
+
+                        ).permitAll()
                 .anyRequest().authenticated();
     }
 
