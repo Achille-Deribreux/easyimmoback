@@ -37,7 +37,7 @@ public interface IBankloanService {
 
     /**
      * Method which deletes a bankloan
-     * @param bankloan you want to delete
+     * @param id of the bankloan you want to delete
      */
-    void deleteBankloan(Bankloan bankloan);
+    void deleteBankloan(Integer id);
 }

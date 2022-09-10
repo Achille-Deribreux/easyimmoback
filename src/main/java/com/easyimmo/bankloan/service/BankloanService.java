@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.bankloan.model.Bankloan;
 import com.easyimmo.bankloan.repository.BankLoanRepository;
+import com.easyimmo.bankloan.util.UpdateBankloanHelper;
 import com.easyimmo.common.exception.BankloanNotFoundException;
 import com.easyimmo.common.utils.CustomValidator;
 import com.easyimmo.property.model.Property;
@@ -62,12 +63,15 @@ public class BankloanService implements IBankloanService{
     @Override
     public Bankloan updateBankloan(Integer id, Bankloan bankloanBody) {
         logger.info("update bankloan for bankloan id : {} and body {}", id, bankloanBody);
-        return null;
+        UpdateBankloanHelper updateBankloanHelper = UpdateBankloanHelper.of(getById(id));
+        Bankloan updatedBankloan = updateBankloanHelper.build(bankloanBody);
+        return bankLoanRepository.save(updatedBankloan);
     }
 
     @Override
-    public void deleteBankloan(Bankloan bankloan) {
-        logger.info("delete bankloan for id : {}", bankloan);
+    public void deleteBankloan(Integer id) {
+        logger.info("delete bankloan for id : {}", id);
+        Bankloan bankloan = getById(id);
         bankLoanRepository.delete(bankloan);
     }
 }
