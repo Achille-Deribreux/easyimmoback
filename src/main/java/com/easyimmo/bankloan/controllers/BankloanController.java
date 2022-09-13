@@ -34,27 +34,52 @@ public class BankloanController {
         this.converter = converter;
     }
 
+    /**
+     * This method answer to a request at : /bankloan/getById and returns a response entity with the wanted bankloan
+     * @param id id of the wanted bankloan
+     * @return response entity with the bankloan you want and code 200 if everything is ok
+     */
     @GetMapping(value="/getById")
     public ResponseEntity<BankloanDetails>getFeeById(@RequestParam(value="id")Integer id){
+        logger.info("get request received at bankloan/getById for id : {}", id);
         return new ResponseEntity<>(converter.convertToBankloanDetails(bankloanService.getById(id)), HttpStatus.OK);
     }
 
+    /**
+     * This method answer to a request at : /bankloan/add and returns a response entity with the added bankloan
+     * @param bankloanBody bankloan to add
+     * @return response entity with the added bankloan and status code 201 if everything is ok
+     */
     @PostMapping(value = "/add")
     public ResponseEntity<BankloanDetails> addBankloan (@RequestBody BankloanBody bankloanBody){
+        logger.info("post request received at bankloan/add for fee : {}", bankloanBody);
         Bankloan bankloan = converter.convertToBankloan(bankloanBody);
         return new ResponseEntity<>(converter.convertToBankloanDetails(bankloanService.addBankloan(bankloan)), HttpStatus.CREATED);
     }
 
+    /*
+     * This method answer to a request at : /bankloan/update and returns a response entity with the updated bankloan
+     * @param id id of the bankloan you want to update
+     * @param bankloanBody fields you want to update
+     * @return response entity with the updated bankloan and status code 201 if everything is ok
+     */
     @PutMapping(value = "/update")
     public ResponseEntity<BankloanDetails> editBankloan (
             @RequestParam(value = "id")Integer id,
             @RequestBody BankloanBody bankloanBody){
+        logger.info("put request received at bankloan/update for id : {} and fee : {}", id, bankloanBody);
         Bankloan bankloan = converter.convertToBankloan(bankloanBody);
         return new ResponseEntity<>(converter.convertToBankloanDetails(bankloanService.updateBankloan(id,bankloan)), HttpStatus.CREATED);
     }
 
+    /**
+     * This method answer to a request at : /bankloan/delete and returns a string
+     * @param id id of the bankloan to delete
+     * @return string and status code 200 if everything is ok
+     */
     @DeleteMapping(value="/deleteById")
     public ResponseEntity<String> deleteBankloanById(@RequestParam(value="id")Integer id){
+        logger.info("delete request received at bankloan/deleteById for id : {}", id);
         bankloanService.deleteBankloan(id);
         return new ResponseEntity<>("successfully deleted", HttpStatus.OK);
     }

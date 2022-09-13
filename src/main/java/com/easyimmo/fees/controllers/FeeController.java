@@ -63,12 +63,13 @@ public class FeeController {
 
     /**
      * This method answer to a request at : /fee/update and returns a response entity with the updated fee
-     * @param feeDto fee to update
+     * @param id id of the fee you want to update
+     * @param feeDto fields you want to update
      * @return response entity with the updated fee and status code 201 if everything is ok
      */
     @PutMapping(value="/update")
     public ResponseEntity<FeeDto>editFee(
-            @RequestParam(value = "id")Integer id,
+            @RequestParam(value = "id") Integer id,
             @RequestBody FeeDto feeDto){
         logger.info("put request received at fee/update for id : {} and fee : {}", id, feeDto);
         Fee updatedFee = feeService.updateFee(id, converter.convert(feeDto));
