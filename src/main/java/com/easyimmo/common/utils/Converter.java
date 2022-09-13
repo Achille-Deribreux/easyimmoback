@@ -1,6 +1,15 @@
 package com.easyimmo.common.utils;
 
-import com.easyimmo.bankloan.dto.BankLoanSummary;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
+import com.easyimmo.bankloan.dto.BankloanBody;
+import com.easyimmo.bankloan.dto.BankloanDetails;
+import com.easyimmo.bankloan.model.Bankloan;
+import com.easyimmo.bankloan.service.BankloanService;
 import com.easyimmo.fees.dto.FeeDetails;
 import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.dto.FeeSummary;
@@ -21,29 +30,27 @@ import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.service.ReservationService;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class Converter {
 
-    private PropertyService propertyService;
+    private final PropertyService propertyService;
 
-    private FeeService feeService;
+    private final FeeService feeService;
 
-    private IncomeService incomeService;
+    private final IncomeService incomeService;
 
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
+
+    private final BankloanService bankloanService;
 
 
-    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService , ReservationService reservationService) {
+    public Converter(PropertyService propertyService, FeeService feeService, IncomeService incomeService, ReservationService reservationService, BankloanService bankloanService) {
         this.propertyService = propertyService;
         this.feeService = feeService;
         this.incomeService = incomeService;
         this.reservationService = reservationService;
+        this.bankloanService = bankloanService;
     }
 
     /**
@@ -120,14 +127,14 @@ public class Converter {
 
 
      public Property convert(PropertyDto propertyDto){
-        return new Property(
-                propertyDto.getId(),
-                propertyDto.getAddress(),
-                propertyDto.getName(),
-                propertyDto.getType(),
-                propertyDto.getRentType(),
-                propertyDto.getPrixAchat()
-        );
+        return new Property()
+                .id(propertyDto.getId())
+                .address(propertyDto.getAddress())
+                .name(propertyDto.getName())
+                .type(propertyDto.getType())
+                .rentType(propertyDto.getRentType())
+                .buyPrice(propertyDto.getPrixAchat())
+                .userId(propertyDto.getUserId());
     }
 
      public PropertyDto convert(Property property){
@@ -157,7 +164,7 @@ public class Converter {
                 .type(propertyTypeMap.toFront(property.getType()))
                 .rentType(propertyRentTypeMap.toFront(property.getRentType()))
                 .buyPrice(property.getBuyPrice())
-                .bankLoanSummary(new BankLoanSummary())
+                .bankLoanSummary(bankloanService.getBankLoanSummaryByProperty(property))
                 .yearlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusYears(1)))
                 .yearlyIncomes(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusYears(1)))
                 .monthlyFees(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusMonths(1)))
@@ -263,5 +270,27 @@ public class Converter {
                 .reservationDate(reservationDate)
                 .pageSize(pageSize)
                 .pageNumber(pageNr);
+    }
+
+    /**
+     * BANK LOAN CONVERTERS
+     */
+    public Bankloan convertToBankloan(BankloanBody bankloanBody){
+        return new Bankloan()
+                .id(bankloanBody.getId())
+                .totalAmount(bankloanBody.getTotalAmount())
+                .startDate(bankloanBody.getStartDate())
+                .endDate(bankloanBody.getEndDate())
+                .monthlyPayment(bankloanBody.getMonthlyPayment())
+                .property(bankloanBody.getPropertyId()!=null?propertyService.getById(bankloanBody.getPropertyId()):null);
+    }
+
+    public BankloanDetails convertToBankloanDetails(Bankloan bankloan){
+        return new BankloanDetails()
+                .id(bankloan.getId())
+                .totalAmount(bankloan.getTotalAmount())
+                .startDate(bankloan.getStartDate())
+                .endDate(bankloan.getEndDate())
+                .monthlyPayment(bankloan.getMonthlyPayment());
     }
 }

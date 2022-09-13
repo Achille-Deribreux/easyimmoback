@@ -1,11 +1,13 @@
 package com.easyimmo.common.utils;
 
-import com.easyimmo.common.exception.InvalidEntityException;
-import org.springframework.stereotype.Component;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.util.Set;
+
+import org.springframework.stereotype.Component;
+
+import com.easyimmo.common.exception.InvalidEntityException;
 
 @Component
 public class CustomValidator {

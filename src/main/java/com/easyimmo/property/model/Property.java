@@ -1,8 +1,14 @@
 package com.easyimmo.property.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="property")
@@ -41,18 +47,9 @@ public class Property {
     @NotNull
     private Integer buyPrice;
 
-
-    public Property() {
-    }
-
-    public Property(Integer id, String address, String name, Type type, RentType rentType, Integer prixAchat) {
-        this.id = id;
-        this.address = address;
-        this.name = name;
-        this.type = type;
-        this.rentType = rentType;
-        this.buyPrice = prixAchat;
-    }
+    @Column(name = "userId")
+    @NotNull
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -129,6 +126,19 @@ public class Property {
 
     public Property rentType(RentType rentType){
         setRentType(rentType);
+        return this;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Property userId(Integer userId){
+        setUserId(userId);
         return this;
     }
 

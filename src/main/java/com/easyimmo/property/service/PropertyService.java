@@ -1,16 +1,19 @@
 package com.easyimmo.property.service;
 
-import com.easyimmo.common.utils.CustomValidator;
-import com.easyimmo.property.dto.PropertyCriteria;
-import com.easyimmo.common.exception.PropertyNotFoundException;
-import com.easyimmo.property.model.Property;
-import com.easyimmo.property.repository.PropertyRepository;
-import com.easyimmo.property.util.UpdatePropertyHelper;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.easyimmo.common.exception.PropertyNotFoundException;
+import com.easyimmo.common.utils.CurrentUser;
+import com.easyimmo.common.utils.CustomValidator;
+import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.model.Property;
+import com.easyimmo.property.repository.PropertyRepository;
+import com.easyimmo.property.util.UpdatePropertyHelper;
+import com.easyimmo.user.service.UserService;
 
 @Service
 public class PropertyService implements IPropertyService {
@@ -21,20 +24,26 @@ public class PropertyService implements IPropertyService {
 
     private final CustomValidator validator;
 
-    public PropertyService(PropertyRepository propertyRepository, CustomValidator customValidator) {
+    private final UserService userService;
+
+    public PropertyService(PropertyRepository propertyRepository, CustomValidator validator, UserService userService) {
         this.propertyRepository = propertyRepository;
-        this.validator = customValidator;
+        this.validator = validator;
+        this.userService = userService;
     }
 
     @Override
     public Property getById(Integer id) {
         logger.info("search in repository {}",id);
-        return propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id" +id));
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFoundException("id " +id));
+        userService.checkUser(property.getUserId());
+        return property;
     }
 
     @Override
     public List<Property> getAll(PropertyCriteria propertyCriteria) {
         logger.info("get all from repository");
+        propertyCriteria.userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         return propertyRepository.findPropertyByMultipleCriteria(propertyCriteria);
     }
 
@@ -48,6 +57,7 @@ public class PropertyService implements IPropertyService {
 
     @Override
     public Property addProperty(Property property) {
+        property.userId(userService.getUserId(CurrentUser.getCurrentUserName()));
         validator.validate(property);
         logger.info("add property with name : {}", property.getName());
         return propertyRepository.save(property);

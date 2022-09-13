@@ -1,9 +1,9 @@
 package com.easyimmo.reservation.service;
 
+import java.util.List;
+
 import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.model.Reservation;
-
-import java.util.List;
 
 public interface IReservationService {
 

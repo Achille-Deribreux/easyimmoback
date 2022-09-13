@@ -1,10 +1,10 @@
 package com.easyimmo.fees.service;
 
-import com.easyimmo.fees.dto.FeeCriteria;
-import com.easyimmo.fees.model.Fee;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import com.easyimmo.fees.dto.FeeCriteria;
+import com.easyimmo.fees.model.Fee;
 
 public interface IFeeService {
 

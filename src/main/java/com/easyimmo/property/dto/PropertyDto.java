@@ -1,9 +1,9 @@
 package com.easyimmo.property.dto;
 
 
-import com.easyimmo.property.model.Property;
-
 import java.util.Objects;
+
+import com.easyimmo.property.model.Property;
 
 public class PropertyDto {
 
@@ -13,6 +13,7 @@ public class PropertyDto {
     private Property.Type type;
     private Property.RentType rentType;
     private Integer prixAchat;
+    private Integer userId;
 
     public PropertyDto() {
     }
@@ -72,6 +73,14 @@ public class PropertyDto {
 
     public void setRentType(Property.RentType rentType) {
         this.rentType = rentType;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override

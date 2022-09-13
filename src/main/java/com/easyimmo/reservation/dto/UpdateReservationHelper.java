@@ -1,12 +1,12 @@
 package com.easyimmo.reservation.dto;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.reservation.model.Reservation;
-
-import java.time.LocalDate;
-import java.util.List;
 
 public class UpdateReservationHelper {
 

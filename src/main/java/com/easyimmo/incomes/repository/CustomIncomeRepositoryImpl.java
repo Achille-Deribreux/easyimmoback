@@ -1,16 +1,21 @@
 package com.easyimmo.incomes.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.incomes.dto.IncomeCriteria;
-import com.easyimmo.incomes.model.Income;
-import com.easyimmo.property.model.Property;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.incomes.dto.IncomeCriteria;
+import com.easyimmo.incomes.model.Income;
+import com.easyimmo.property.model.Property;
 
 public class CustomIncomeRepositoryImpl implements CustomIncomeRepository{
 
@@ -30,6 +35,7 @@ public class CustomIncomeRepositoryImpl implements CustomIncomeRepository{
                 .add(incomeCriteria.getMaxDate()!=null,()->criteriaBuilder.lessThanOrEqualTo(incomeRoot.get("date"),incomeCriteria.getMaxDate()))
                 .add(incomeCriteria.getDescription()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(incomeRoot.get("description"))),toLike(incomeCriteria.getDescription())))
                 .add(incomeCriteria.getPropertyName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyJoin.get("name"))),toLike(incomeCriteria.getPropertyName())))
+                .add(incomeCriteria.getUserId()!=null,()->criteriaBuilder.equal(propertyJoin.get("userId"),incomeCriteria.getUserId()))
                 .add(incomeCriteria.getType()!=null,()->criteriaBuilder.equal((incomeRoot.get("type")),incomeCriteria.getType()))
                 .add(incomeCriteria.getPropertyId()!=null,()->criteriaBuilder.equal((propertyJoin.get("id")),incomeCriteria.getPropertyId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));

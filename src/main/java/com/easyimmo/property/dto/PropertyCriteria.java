@@ -11,9 +11,7 @@ public class PropertyCriteria {
     private Integer highPrice;
     private Integer pageSize;
     private Integer pageNumber;
-
-    public PropertyCriteria() {
-    }
+    private Integer userId;
 
     public Property.Type getType() {
         return type;
@@ -107,4 +105,16 @@ public class PropertyCriteria {
         return this;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public PropertyCriteria userId(Integer userId){
+        setUserId(userId);
+        return this;
+    }
 }

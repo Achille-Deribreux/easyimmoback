@@ -1,7 +1,6 @@
 package com.easyimmo.reservation.dto;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class ReservationSummary {
 

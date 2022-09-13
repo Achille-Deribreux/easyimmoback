@@ -1,9 +1,9 @@
 package com.easyimmo.property.service;
 
+import java.util.List;
+
 import com.easyimmo.property.dto.PropertyCriteria;
 import com.easyimmo.property.model.Property;
-
-import java.util.List;
 
 public interface IPropertyService {
 

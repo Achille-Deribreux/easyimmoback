@@ -1,5 +1,21 @@
 package com.easyimmo.reservation.controllers;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.easyimmo.common.utils.Converter;
 import com.easyimmo.reservation.dto.ReservationBody;
 import com.easyimmo.reservation.dto.ReservationCriteria;
@@ -7,15 +23,6 @@ import com.easyimmo.reservation.dto.ReservationDetails;
 import com.easyimmo.reservation.dto.ReservationSummary;
 import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.service.ReservationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/reservation")
@@ -97,7 +104,7 @@ public class ReservationController {
      * @param id id of the reservation to delete
      * @return response entity with the deleted reservation and status code 200 if everything is ok
      */
-    @DeleteMapping(value="/delete")
+    @DeleteMapping(value="/deleteById")
     public ResponseEntity<String> deleteReservation(@RequestParam(value="id") Integer id) {
         logger.info("delete request received at reservation/delete for id : {}", id);
         reservationService.deleteById(id);

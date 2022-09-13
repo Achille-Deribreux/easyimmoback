@@ -1,8 +1,7 @@
 package com.easyimmo.property.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.property.dto.PropertyCriteria;
-import com.easyimmo.property.model.Property;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,8 +10,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.property.dto.PropertyCriteria;
+import com.easyimmo.property.model.Property;
 
 public class CustomPropertyRepositoryImpl implements CustomPropertyRepository{
 
@@ -30,7 +31,8 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository{
         .add(propertyCriteria.getType()!=null,()->criteriaBuilder.equal(propertyRoot.get("type"),propertyCriteria.getType()))
         .add(propertyCriteria.getLowPrice()!=null,()->criteriaBuilder.greaterThanOrEqualTo(propertyRoot.get("buyPrice"),propertyCriteria.getLowPrice()))
         .add(propertyCriteria.getHighPrice()!=null,()->criteriaBuilder.lessThanOrEqualTo(propertyRoot.get("buyPrice"),propertyCriteria.getHighPrice()))
-        .add(propertyCriteria.getName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyRoot.get("name"))),toLike(propertyCriteria.getName())));
+        .add(propertyCriteria.getName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyRoot.get("name"))),toLike(propertyCriteria.getName())))
+        .add(propertyCriteria.getUserId()!=null,()->criteriaBuilder.equal(propertyRoot.get("userId"),propertyCriteria.getUserId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(propertyRoot.get("buyPrice")));
         TypedQuery<Property> query = entityManager.createQuery(criteriaQuery);

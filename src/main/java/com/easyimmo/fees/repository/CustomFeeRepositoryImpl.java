@@ -1,16 +1,21 @@
 package com.easyimmo.fees.repository;
 
-import com.easyimmo.common.utils.BasicUtils;
-import com.easyimmo.fees.dto.FeeCriteria;
-import com.easyimmo.fees.model.Fee;
-import com.easyimmo.property.model.Property;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import com.easyimmo.common.utils.BasicUtils;
+import com.easyimmo.fees.dto.FeeCriteria;
+import com.easyimmo.fees.model.Fee;
+import com.easyimmo.property.model.Property;
 
 public class CustomFeeRepositoryImpl implements CustomFeeRepository{
 
@@ -31,6 +36,7 @@ public class CustomFeeRepositoryImpl implements CustomFeeRepository{
         .add(feeCriteria.getSupplier()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(feeRoot.get("supplier"))),toLike(feeCriteria.getSupplier())))
         .add(feeCriteria.getDescription()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(feeRoot.get("description"))),toLike(feeCriteria.getDescription())))
         .add(feeCriteria.getPropertyName()!=null,()->criteriaBuilder.like((criteriaBuilder.upper(propertyJoin.get("name"))),toLike(feeCriteria.getPropertyName())))
+        .add(feeCriteria.getUserId()!=null,()->criteriaBuilder.equal(propertyJoin.get("userId"),feeCriteria.getUserId()))
         .add(feeCriteria.getPropertyId()!=null,()->criteriaBuilder.equal((propertyJoin.get("id")),feeCriteria.getPropertyId()));
         criteriaQuery.where(conditionalList.toList().toArray(new Predicate[0]));
         criteriaQuery.orderBy(criteriaBuilder.desc(feeRoot.get("date")));

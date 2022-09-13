@@ -1,12 +1,21 @@
 package com.easyimmo.fees.model;
 
-import com.easyimmo.property.model.Property;
-import com.easyimmo.reservation.model.Reservation;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.easyimmo.property.model.Property;
+import com.easyimmo.reservation.model.Reservation;
 
 @Entity
 @Table(name="fees")
@@ -16,6 +25,7 @@ public class Fee {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
     @NotNull
@@ -61,12 +71,22 @@ public class Fee {
         this.id = id;
     }
 
+    public Fee id(Integer id){
+        setId(id);
+        return this;
+    }
+
     public Property getProperty() {
         return property;
     }
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Fee property(Property property){
+        setProperty(property);
+        return this;
     }
 
     public String getSupplier() {
@@ -77,12 +97,22 @@ public class Fee {
         this.supplier = supplier;
     }
 
+    public Fee supplier(String supplier){
+        setSupplier(supplier);
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Fee description(String description){
+        setDescription(description);
+        return this;
     }
 
     public Integer getAmount() {
@@ -93,12 +123,22 @@ public class Fee {
         this.amount = amount;
     }
 
+    public Fee amount(Integer amount){
+        setAmount(amount);
+        return this;
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Fee date(LocalDate date){
+        setDate(date);
+        return this;
     }
 
     @Override
