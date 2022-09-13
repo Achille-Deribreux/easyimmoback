@@ -45,8 +45,8 @@ public class BankloanService implements IBankloanService{
         if(bankloan == null)
             return null;
         Integer months = bankloan.getEndDate().getMonthValue() - bankloan.getStartDate().getMonthValue();
-        Integer refundedAmount = bankloan.getTotalAmount() - (bankloan.getMonthlyPayment() * months);
-        Integer dueAmount = bankloan.getTotalAmount() - refundedAmount;
+        Long refundedAmount = bankloan.getTotalAmount() - (bankloan.getMonthlyPayment() * months);
+        Long dueAmount = bankloan.getTotalAmount() - refundedAmount;
         return new BankLoanSummary()
                 .totalAmount(bankloan.getTotalAmount())
                 .refundedAmount(refundedAmount)

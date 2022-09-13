@@ -26,7 +26,7 @@ public class Bankloan {
 
     @Column(name="totalAmount")
     @NotNull
-    private Integer totalAmount;
+    private Long totalAmount;
 
     @Column(name="startDate")
     @NotNull
@@ -38,7 +38,7 @@ public class Bankloan {
 
     @Column(name = "monthlyPayment")
     @NotNull
-    private Integer monthlyPayment;
+    private Long monthlyPayment;
 
     @ManyToOne
     @JoinColumn(name="property_id", referencedColumnName = "id")
@@ -58,15 +58,15 @@ public class Bankloan {
         return this;
     }
 
-    public Integer getTotalAmount() {
+    public Long getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(Long totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Bankloan totalAmount(Integer totalAmount){
+    public Bankloan totalAmount(Long totalAmount){
         setTotalAmount(totalAmount);
         return this;
     }
@@ -97,15 +97,15 @@ public class Bankloan {
         return this;
     }
 
-    public Integer getMonthlyPayment() {
+    public Long getMonthlyPayment() {
         return monthlyPayment;
     }
 
-    public void setMonthlyPayment(Integer monthlyPayment) {
+    public void setMonthlyPayment(Long monthlyPayment) {
         this.monthlyPayment = monthlyPayment;
     }
 
-    public Bankloan monthlyPayment(Integer monthlyPayment){
+    public Bankloan monthlyPayment(Long monthlyPayment){
         setMonthlyPayment(monthlyPayment);
         return this;
     }

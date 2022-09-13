@@ -16,14 +16,14 @@ public class UpdateBankloanHelper {
         return new UpdateBankloanHelper(bankloan);
     }
 
-    public UpdateBankloanHelper totalAmount (Integer totalAmount){
+    public UpdateBankloanHelper totalAmount (Long totalAmount){
         if(totalAmount != null && !totalAmount.equals(bankloan.getTotalAmount())){
             bankloan.setTotalAmount(totalAmount);
         }
         return this;
     }
 
-    public UpdateBankloanHelper monthlyPayment (Integer monthlyPayment){
+    public UpdateBankloanHelper monthlyPayment (Long monthlyPayment){
         if(monthlyPayment != null && !monthlyPayment.equals(bankloan.getMonthlyPayment())){
             bankloan.setMonthlyPayment(monthlyPayment);
         }

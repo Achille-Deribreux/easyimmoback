@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class BankloanDetails {
     private Integer id;
-    private Integer totalAmount;
+    private Long totalAmount;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Integer monthlyPayment;
+    private Long monthlyPayment;
 
     public Integer getId() {
         return id;
@@ -22,15 +22,15 @@ public class BankloanDetails {
         return this;
     }
 
-    public Integer getTotalAmount() {
+    public Long getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(Long totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public BankloanDetails totalAmount(Integer totalAmount){
+    public BankloanDetails totalAmount(Long totalAmount){
         setTotalAmount(totalAmount);
         return this;
     }
@@ -61,15 +61,15 @@ public class BankloanDetails {
         return this;
     }
 
-    public Integer getMonthlyPayment() {
+    public Long getMonthlyPayment() {
         return monthlyPayment;
     }
 
-    public void setMonthlyPayment(Integer monthlyPayment) {
+    public void setMonthlyPayment(Long monthlyPayment) {
         this.monthlyPayment = monthlyPayment;
     }
 
-    public BankloanDetails monthlyPayment(Integer monthlyPayment){
+    public BankloanDetails monthlyPayment(Long monthlyPayment){
         setMonthlyPayment(monthlyPayment);
         return this;
     }
