@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -55,11 +56,9 @@ class ReservationRepositoryUTest {
         reservation2 = reservationRepository.save(reservation2);
     }
 
-    /**
-     * TEST CASE 1, we search by property id
-     */
     @Test
-    void findReservationByMultipleCriteriaTestCase1() {
+    @DisplayName("test find a reservation by property")
+    void findReservationByProperty() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().property(property1);
         List<Reservation> expected = Collections.singletonList(reservation1);
@@ -69,11 +68,9 @@ class ReservationRepositoryUTest {
         Assertions.assertEquals(expected, result);
     }
 
-    /**
-     * TEST CASE 2, we search by reservationDate
-     */
     @Test
-    void findReservationByMultipleCriteriaTestCase2() {
+    @DisplayName("test find a reservation by reservation date")
+    void findReservationByReservationDate() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().reservationDate(LocalDate.now().minusDays(1));
         List<Reservation> expected = Collections.singletonList(reservation1);
@@ -83,11 +80,9 @@ class ReservationRepositoryUTest {
         Assertions.assertEquals(expected, result);
     }
 
-    /**
-     * TEST CASE 3, we search by fromDate
-     */
     @Test
-    void findReservationByMultipleCriteriaTestCase3() {
+    @DisplayName("test find a reservation by reservation from date")
+    void findReservationByfromDate() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().fromDate(LocalDate.now().plusDays(1));
         List<Reservation> expected = Collections.singletonList(reservation1);
@@ -97,11 +92,8 @@ class ReservationRepositoryUTest {
         Assertions.assertEquals(expected, result);
     }
 
-    /**
-     * TEST CASE 4, we search by toDate
-     */
-    @Test
-    void findReservationByMultipleCriteriaTestCase4() {
+    @DisplayName("test find a reservation by reservation to date")
+    void findReservationByToDate() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().toDate(LocalDate.now().plusDays(10));
         List<Reservation> expected = Collections.singletonList(reservation1);
@@ -111,11 +103,9 @@ class ReservationRepositoryUTest {
         Assertions.assertEquals(expected, result);
     }
 
-    /**
-     * TEST CASE 5, we search wih pageSize and pageNumber
-     */
     @Test
-    void findReservationByMultipleCriteriaTestCase5() {
+    @DisplayName("paging test")
+    void pagingTest() {
         //Given
         ReservationCriteria reservationCriteria = new ReservationCriteria().pageSize(1).pageNumber(1);
         List<Reservation> expected = Collections.singletonList(reservation2);

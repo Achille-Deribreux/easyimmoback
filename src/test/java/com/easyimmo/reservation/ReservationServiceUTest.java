@@ -89,7 +89,7 @@ class ReservationServiceUTest {
     @Test
     void deleteByIdTest() {
         //Given
-        Reservation reservation = new Reservation().id(1);
+        Reservation reservation = new Reservation().id(1).property(new Property().userId(1));
         //When
         Mockito.when(userService.getUserId("test")).thenReturn(1);
         Mockito.when(reservationRepository.findById(reservation.getId())).thenReturn(Optional.of(reservation));
