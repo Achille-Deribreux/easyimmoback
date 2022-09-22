@@ -31,12 +31,22 @@ public class FeeDto {
         this.id = id;
     }
 
+    public FeeDto id (Integer id){
+        setId(id);
+        return this;
+    }
+
     public Integer getPropertyId() {
         return propertyId;
     }
 
     public void setPropertyId(Integer propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public FeeDto propertyId (Integer propertyId){
+        setPropertyId(propertyId);
+        return this;
     }
 
     public String getSupplier() {
@@ -47,12 +57,22 @@ public class FeeDto {
         this.supplier = supplier;
     }
 
+    public FeeDto supplier (String supplier){
+        setSupplier(supplier);
+        return this;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public FeeDto description (String description){
+        setDescription(description);
+        return this;
     }
 
     public Integer getAmount() {
@@ -63,12 +83,22 @@ public class FeeDto {
         this.amount = amount;
     }
 
+    public FeeDto amount (Integer amount){
+        setAmount(amount);
+        return this;
+    }
+
     public LocalDate getDate() {
         return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public FeeDto date (LocalDate date){
+        setDate(date);
+        return this;
     }
 
     @Override

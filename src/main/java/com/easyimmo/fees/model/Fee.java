@@ -146,7 +146,7 @@ public class Fee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fee fee = (Fee) o;
-        return Objects.equals(id, fee.id) && Objects.equals(property, fee.property) && Objects.equals(supplier, fee.supplier) && Objects.equals(description, fee.description) && Objects.equals(amount, fee.amount) && Objects.equals(date, fee.date);
+        return Objects.equals(id, fee.id) && Objects.equals(property.getId(), fee.property.getId()) && Objects.equals(supplier, fee.supplier) && Objects.equals(description, fee.description) && Objects.equals(amount, fee.amount) && Objects.equals(date, fee.date);
     }
 
     @Override

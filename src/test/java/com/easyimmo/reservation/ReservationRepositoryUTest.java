@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.easyimmo.EntityBuilder;
 import com.easyimmo.incomes.model.Income;
@@ -21,6 +22,7 @@ import com.easyimmo.reservation.model.Reservation;
 import com.easyimmo.reservation.repository.ReservationRepository;
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ReservationRepositoryUTest {
 
     @Autowired
