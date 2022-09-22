@@ -93,7 +93,7 @@ class ConverterUTest {
     }
 
     @Test
-    @DisplayName("test to convert a fee into FeeDetails")
+    @DisplayName("test to convert a fee into FeeSummary")
     void convertToSummaryTest(){
         //Given
         Fee fee = ConverterTestData.getFee();
@@ -123,4 +123,22 @@ class ConverterUTest {
         Assertions.assertEquals(expected.get(0).getPropertyId(),result.get(0).getPropertyId());
         Assertions.assertEquals(expected.get(0).getSupplier(),result.get(0).getSupplier());
     }
+
+    @Test
+    @DisplayName("test to convert a list of fee into a list of FeeSummary")
+    void convertToFeeSummaryListTest(){
+        //Given
+        List<Fee> feeList = List.of(ConverterTestData.getFee());
+        List<FeeSummary> expected = List.of(ConverterTestData.getFeeSummary());
+        //When
+        List<FeeSummary> result = converter.convertToFeeSummaryList(feeList);
+        //Then
+        Assertions.assertEquals(expected.size(),result.size());
+        Assertions.assertEquals(expected.get(0).getId(),result.get(0).getId());
+        Assertions.assertEquals(expected.get(0).getAmount(),result.get(0).getAmount());
+        Assertions.assertEquals(expected.get(0).getDate(),result.get(0).getDate());
+        Assertions.assertEquals(expected.get(0).getSupplier(),result.get(0).getSupplier());
+    }
+
+
 }
