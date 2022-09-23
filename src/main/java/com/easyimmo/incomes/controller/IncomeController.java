@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyimmo.common.utils.Converter;
+import com.easyimmo.incomes.dto.IncomeBody;
 import com.easyimmo.incomes.dto.IncomeCriteria;
-import com.easyimmo.incomes.dto.IncomeDto;
+import com.easyimmo.incomes.dto.IncomeDetails;
+import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.service.IncomeService;
 
@@ -38,27 +40,27 @@ public class IncomeController {
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<IncomeDto> getIncomeById(@RequestParam(value = "id")Integer id){
+    public ResponseEntity<IncomeSummary> getIncomeById(@RequestParam(value = "id")Integer id){
         logger.info("request received at /income/getById with id : {}", id);
-        return new ResponseEntity<>(converter.convert(incomeService.getIncomeById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToSummary(incomeService.getIncomeById(id)), HttpStatus.OK);
     }
 
     @PostMapping(value="/add")
-    public ResponseEntity<IncomeDto>addIncome(@RequestBody IncomeDto incomeDto){
+    public ResponseEntity<IncomeDetails>addIncome(@RequestBody IncomeBody incomeDto){
         Income addedIncome = incomeService.addIncome(converter.convert(incomeDto));
         return new ResponseEntity<>(converter.convert(addedIncome),HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update")
-    public ResponseEntity<IncomeDto>editIncome(
+    public ResponseEntity<IncomeDetails>editIncome(
             @RequestParam(value = "id")Integer id,
-            @RequestBody IncomeDto incomeDto){
+            @RequestBody IncomeBody incomeDto){
         Income updatedIncome = incomeService.updateIncome(id, converter.convert(incomeDto));
         return new ResponseEntity<>(converter.convert(updatedIncome), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<IncomeDto>> getAllIncomes(
+    public ResponseEntity<List<IncomeSummary>> getAllIncomes(
             @RequestParam(value = "incomeType", required = false)Income.IncomeType type,
             @RequestParam(value = "propertyId",required=false)Integer propertyId,
             @RequestParam(value = "propertyName", required = false)String propertyName,
@@ -85,7 +87,7 @@ public class IncomeController {
         List<Income> allIncomeList = incomeService.getAllIncomes(incomeCriteria);
         if(allIncomeList.isEmpty())
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(converter.convertIncomeList(allIncomeList),HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToSummaryList(allIncomeList),HttpStatus.OK);
     }
 
     @DeleteMapping(value="/deleteById")

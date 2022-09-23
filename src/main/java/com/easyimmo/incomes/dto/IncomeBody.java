@@ -3,24 +3,16 @@ package com.easyimmo.incomes.dto;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class IncomeDto {
+import com.easyimmo.incomes.model.Income;
+
+public class IncomeBody {
 
     private Integer id;
     private Integer propertyId;
     private String description;
     private Integer amount;
     private LocalDate date;
-
-    public IncomeDto() {
-    }
-
-    public IncomeDto(Integer id, Integer propertyId, String description, Integer amount, LocalDate date) {
-        this.id = id;
-        this.propertyId = propertyId;
-        this.description = description;
-        this.amount = amount;
-        this.date = date;
-    }
+    private Income.IncomeType incomeType;
 
     public Integer getId() {
         return id;
@@ -62,16 +54,24 @@ public class IncomeDto {
         this.date = date;
     }
 
+    public Income.IncomeType getIncomeType() {
+        return incomeType;
+    }
+
+    public void setIncomeType(Income.IncomeType incomeType) {
+        this.incomeType = incomeType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IncomeDto incomeDto = (IncomeDto) o;
-        return Objects.equals(id, incomeDto.id) && Objects.equals(propertyId, incomeDto.propertyId) && Objects.equals(description, incomeDto.description) && Objects.equals(amount, incomeDto.amount) && Objects.equals(date, incomeDto.date);
+        IncomeBody that = (IncomeBody) o;
+        return Objects.equals(id, that.id) && Objects.equals(propertyId, that.propertyId) && Objects.equals(description, that.description) && Objects.equals(amount, that.amount) && Objects.equals(date, that.date) && incomeType == that.incomeType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, propertyId, description, amount, date);
+        return Objects.hash(id, propertyId, description, amount, date, incomeType);
     }
 }

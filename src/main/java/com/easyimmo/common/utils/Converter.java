@@ -15,7 +15,8 @@ import com.easyimmo.fees.dto.FeeDto;
 import com.easyimmo.fees.dto.FeeSummary;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.service.FeeService;
-import com.easyimmo.incomes.dto.IncomeDto;
+import com.easyimmo.incomes.dto.IncomeBody;
+import com.easyimmo.incomes.dto.IncomeDetails;
 import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.service.IncomeService;
@@ -181,24 +182,24 @@ public class Converter {
     /**
      * INCOMES CONVERTERS
      */
-    public IncomeDto convert(Income income){
-        return new IncomeDto(
-                income.getId(),
-                income.getProperty().getId(),
-                income.getDescription(),
-                income.getAmount(),
-                income.getDate()
-                );
+    public IncomeDetails convert(Income income){
+        return new IncomeDetails()
+                .id(income.getId())
+                .property(convertToSummary(income.getProperty()))
+                .amount(income.getAmount())
+                .description(income.getDescription())
+                .incomeType(income.getIncomeType())
+                .date(income.getDate());
     }
 
-    public Income convert(IncomeDto incomeDto){
+    public Income convert(IncomeBody incomeDto){
         return new Income(
                 incomeDto.getId(),
                 propertyService.getById(incomeDto.getPropertyId()),
                 incomeDto.getAmount(),
                 incomeDto.getDescription(),
                 incomeDto.getDate(),
-                null
+                incomeDto.getIncomeType()
         );
     }
 
@@ -216,10 +217,6 @@ public class Converter {
                 .collect(Collectors.toList());
     }
 
-    public List<IncomeDto> convertIncomeList(List<Income> incomeList){
-        return incomeList.stream().map(this::convert).collect(Collectors.toList());
-    }
-
 
 
     /**
@@ -232,7 +229,7 @@ public class Converter {
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
                 .property(convert(reservation.getProperty()))
-                .income(reservation.getIncome()!=null ?convert(reservation.getIncome()):null)
+                .income(reservation.getIncome()!=null ?convertToSummary(reservation.getIncome()):null)
                 .feeList(reservation.getFeeList()!=null && !reservation.getFeeList().isEmpty()? convertFeeList(reservation.getFeeList()):null);
     }
 

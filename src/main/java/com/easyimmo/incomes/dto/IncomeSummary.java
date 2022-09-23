@@ -9,9 +9,6 @@ public class IncomeSummary {
     private Integer amount;
     private String description;
 
-    public IncomeSummary() {
-    }
-
     public Integer getId() {
         return id;
     }

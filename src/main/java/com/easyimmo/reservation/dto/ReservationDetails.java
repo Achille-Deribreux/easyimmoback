@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.easyimmo.fees.dto.FeeDto;
-import com.easyimmo.incomes.dto.IncomeDto;
+import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.property.dto.PropertyDto;
 
 public class ReservationDetails {
@@ -14,7 +14,7 @@ public class ReservationDetails {
     private LocalDate fromDate;
     private LocalDate toDate;
     private PropertyDto property;
-    private IncomeDto income;
+    private IncomeSummary income;
     private List<FeeDto> feeList;
 
     public ReservationDetails() {
@@ -85,15 +85,15 @@ public class ReservationDetails {
         return this;
     }
 
-    public IncomeDto getIncome() {
+    public IncomeSummary getIncome() {
         return income;
     }
 
-    public void setIncome(IncomeDto income) {
+    public void setIncome(IncomeSummary income) {
         this.income = income;
     }
 
-    public ReservationDetails income (IncomeDto income) {
+    public ReservationDetails income (IncomeSummary income) {
         this.income = income;
         return this;
     }
