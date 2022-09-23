@@ -182,7 +182,7 @@ public class Converter {
     /**
      * INCOMES CONVERTERS
      */
-    public IncomeDetails convert(Income income){
+    public IncomeDetails convertToDetails(Income income){
         return new IncomeDetails()
                 .id(income.getId())
                 .property(convertToSummary(income.getProperty()))
@@ -192,14 +192,14 @@ public class Converter {
                 .date(income.getDate());
     }
 
-    public Income convert(IncomeBody incomeDto){
+    public Income convert(IncomeBody incomeBody){
         return new Income(
-                incomeDto.getId(),
-                propertyService.getById(incomeDto.getPropertyId()),
-                incomeDto.getAmount(),
-                incomeDto.getDescription(),
-                incomeDto.getDate(),
-                incomeDto.getIncomeType()
+                incomeBody.getId(),
+                propertyService.getById(incomeBody.getPropertyId()),
+                incomeBody.getAmount(),
+                incomeBody.getDescription(),
+                incomeBody.getDate(),
+                incomeBody.getIncomeType()
         );
     }
 

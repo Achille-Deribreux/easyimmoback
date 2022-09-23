@@ -40,15 +40,15 @@ public class IncomeController {
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<IncomeSummary> getIncomeById(@RequestParam(value = "id")Integer id){
+    public ResponseEntity<IncomeDetails> getIncomeById(@RequestParam(value = "id")Integer id){
         logger.info("request received at /income/getById with id : {}", id);
-        return new ResponseEntity<>(converter.convertToSummary(incomeService.getIncomeById(id)), HttpStatus.OK);
+        return new ResponseEntity<>(converter.convertToDetails(incomeService.getIncomeById(id)), HttpStatus.OK);
     }
 
     @PostMapping(value="/add")
     public ResponseEntity<IncomeDetails>addIncome(@RequestBody IncomeBody incomeDto){
         Income addedIncome = incomeService.addIncome(converter.convert(incomeDto));
-        return new ResponseEntity<>(converter.convert(addedIncome),HttpStatus.CREATED);
+        return new ResponseEntity<>(converter.convertToDetails(addedIncome),HttpStatus.CREATED);
     }
 
     @PutMapping(value="/update")
@@ -56,7 +56,7 @@ public class IncomeController {
             @RequestParam(value = "id")Integer id,
             @RequestBody IncomeBody incomeDto){
         Income updatedIncome = incomeService.updateIncome(id, converter.convert(incomeDto));
-        return new ResponseEntity<>(converter.convert(updatedIncome), HttpStatus.CREATED);
+        return new ResponseEntity<>(converter.convertToDetails(updatedIncome), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAll")
