@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,6 +19,7 @@ import com.easyimmo.fees.dto.FeeSummary;
 import com.easyimmo.fees.model.Fee;
 import com.easyimmo.fees.service.FeeService;
 import com.easyimmo.incomes.service.IncomeService;
+import com.easyimmo.property.dto.PropertyDto;
 import com.easyimmo.property.model.Property;
 import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.service.ReservationService;
@@ -45,6 +47,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a feeDto to a fee")
+    @Tag("fee")
     void convertFeeDtoTest() {
         //Given
         Fee expected = ConverterTestData.getFee();
@@ -62,6 +65,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a fee into a feeDto")
+    @Tag("fee")
     void convertFeeTest(){
         //Given
         Fee fee = ConverterTestData.getFee();
@@ -78,6 +82,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a fee into FeeDetails")
+    @Tag("fee")
     void convertToDetailsTest(){
         //Given
         Fee fee = ConverterTestData.getFee();
@@ -94,6 +99,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a fee into FeeSummary")
+    @Tag("fee")
     void convertToSummaryTest(){
         //Given
         Fee fee = ConverterTestData.getFee();
@@ -109,6 +115,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a List of Fee into a List of FeeDto")
+    @Tag("fee")
     void convertFeeList() {
         //Given
         List<Fee> feeList = List.of(ConverterTestData.getFee());
@@ -126,6 +133,7 @@ class ConverterUTest {
 
     @Test
     @DisplayName("test to convert a list of fee into a list of FeeSummary")
+    @Tag("fee")
     void convertToFeeSummaryListTest(){
         //Given
         List<Fee> feeList = List.of(ConverterTestData.getFee());
@@ -140,5 +148,23 @@ class ConverterUTest {
         Assertions.assertEquals(expected.get(0).getSupplier(),result.get(0).getSupplier());
     }
 
+    @Test
+    @DisplayName("test to convert a propertyDto into a Property")
+    @Tag("property")
+    void convertToPropertyTest() {
+        //Given
+        PropertyDto propertyDto = ConverterTestData.getPropertyDto();
+        Property expected = ConverterTestData.getProperty();
+        //When
+        Property result = converter.convert(propertyDto);
+        //Then
+        Assertions.assertEquals(expected.getId(),result.getId());
+        Assertions.assertEquals(expected.getName(),result.getName());
+        Assertions.assertEquals(expected.getAddress(),result.getAddress());
+        Assertions.assertEquals(expected.getType(),result.getType());
+        Assertions.assertEquals(expected.getRentType(),result.getRentType());
+        Assertions.assertEquals(expected.getBuyPrice(),result.getBuyPrice());
+        Assertions.assertEquals(expected.getUserId(),result.getUserId());
 
+    }
 }

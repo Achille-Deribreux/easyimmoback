@@ -35,12 +35,22 @@ public class PropertyDto {
         this.id = id;
     }
 
+    public PropertyDto id(Integer id){
+        setId(id);
+        return this;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public PropertyDto address (String address){
+        setAddress(address);
+        return this;
     }
 
     public String getName() {
@@ -51,12 +61,22 @@ public class PropertyDto {
         this.name = name;
     }
 
+    public PropertyDto name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public Property.Type getType() {
         return type;
     }
 
     public void setType(Property.Type type) {
         this.type = type;
+    }
+
+    public PropertyDto type(Property.Type type) {
+        this.type = type;
+        return this;
     }
 
     public Integer getPrixAchat() {
@@ -67,6 +87,11 @@ public class PropertyDto {
         this.prixAchat = prixAchat;
     }
 
+    public PropertyDto prixAchat(Integer buyPrice){
+        setPrixAchat(buyPrice);
+        return this;
+    }
+
     public Property.RentType getRentType() {
         return rentType;
     }
@@ -75,12 +100,22 @@ public class PropertyDto {
         this.rentType = rentType;
     }
 
+    public PropertyDto rentType(Property.RentType rentType){
+        setRentType(rentType);
+        return this;
+    }
+
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public PropertyDto userId(Integer userId){
+        setUserId(userId);
+        return this;
     }
 
     @Override
