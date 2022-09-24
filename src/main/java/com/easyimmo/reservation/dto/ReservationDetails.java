@@ -17,9 +17,6 @@ public class ReservationDetails {
     private IncomeSummary income;
     private List<FeeDto> feeList;
 
-    public ReservationDetails() {
-    }
-
     public Integer getId() {
         return id;
     }

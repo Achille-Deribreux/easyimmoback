@@ -139,14 +139,14 @@ public class Converter {
     }
 
      public PropertyDto convert(Property property){
-        return new PropertyDto(
-                property.getId(),
-                property.getAddress(),
-                property.getName(),
-                property.getType(),
-                property.getRentType(),
-                property.getBuyPrice()
-        );
+        return new PropertyDto()
+                .id(property.getId())
+                .address(property.getAddress())
+                .name(property.getName())
+                .type(property.getType())
+                .rentType(property.getRentType())
+                .prixAchat(property.getBuyPrice())
+                .userId(property.getUserId());
     }
 
     public PropertySummary convertToSummary(Property property){

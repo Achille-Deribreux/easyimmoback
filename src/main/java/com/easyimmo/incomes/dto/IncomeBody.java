@@ -22,12 +22,22 @@ public class IncomeBody {
         this.id = id;
     }
 
+    public IncomeBody id (Integer id) {
+        this.id = id;
+        return this;
+    }
+
     public Integer getPropertyId() {
         return propertyId;
     }
 
     public void setPropertyId(Integer propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public IncomeBody propertyId (Integer propertyId) {
+        this.propertyId = propertyId;
+        return this;
     }
 
     public String getDescription() {
@@ -38,12 +48,22 @@ public class IncomeBody {
         this.description = description;
     }
 
+    public IncomeBody description (String description) {
+        this.description = description;
+        return this;
+    }
+
     public Integer getAmount() {
         return amount;
     }
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public IncomeBody amount (Integer amount) {
+        this.amount = amount;
+        return this;
     }
 
     public LocalDate getDate() {
@@ -54,12 +74,22 @@ public class IncomeBody {
         this.date = date;
     }
 
+    public IncomeBody date (LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
     public Income.IncomeType getIncomeType() {
         return incomeType;
     }
 
     public void setIncomeType(Income.IncomeType incomeType) {
         this.incomeType = incomeType;
+    }
+
+    public IncomeBody incomeType (Income.IncomeType incomeType) {
+        this.incomeType = incomeType;
+        return this;
     }
 
     @Override
