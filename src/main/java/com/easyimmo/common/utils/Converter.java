@@ -193,14 +193,13 @@ public class Converter {
     }
 
     public Income convert(IncomeBody incomeBody){
-        return new Income(
-                incomeBody.getId(),
-                propertyService.getById(incomeBody.getPropertyId()),
-                incomeBody.getAmount(),
-                incomeBody.getDescription(),
-                incomeBody.getDate(),
-                incomeBody.getIncomeType()
-        );
+        return new Income()
+                .id(incomeBody.getId())
+                .property(propertyService.getById(incomeBody.getPropertyId()))
+                .amount(incomeBody.getAmount())
+                .description(incomeBody.getDescription())
+                .incomeType(incomeBody.getIncomeType())
+                .date(incomeBody.getDate());
     }
 
     public IncomeSummary convertToSummary(Income income){
@@ -259,6 +258,7 @@ public class Converter {
         return reservationList.stream().map(this::convertToReservationSummary).collect(Collectors.toList());
     }
 
+    //Todo : do this in controller
     public ReservationCriteria convertToReservationCriteria(Integer propertyId, LocalDate fromDate, LocalDate toDate, LocalDate reservationDate, Integer pageSize, Integer pageNr){
         return new ReservationCriteria()
                 .property(propertyId!=null?propertyService.getById(propertyId):null)

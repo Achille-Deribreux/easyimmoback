@@ -3,6 +3,7 @@ package com.easyimmo;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.easyimmo.bankloan.dto.BankloanBody;
 import com.easyimmo.bankloan.dto.BankloanDetails;
 import com.easyimmo.bankloan.model.Bankloan;
 import com.easyimmo.fees.dto.FeeDetails;
@@ -205,6 +206,16 @@ public class DemoTestData {
     public static BankloanDetails getBankLoanDetails() {
         return new BankloanDetails()
                 .id(1)
+                .totalAmount(10000000L)
+                .monthlyPayment(41667L)
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusYears(20));
+    }
+
+    public static BankloanBody getBankLoanBody() {
+        return new BankloanBody()
+                .id(1)
+                .propertyId(1)
                 .totalAmount(10000000L)
                 .monthlyPayment(41667L)
                 .startDate(LocalDate.now())
