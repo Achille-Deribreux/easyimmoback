@@ -1,5 +1,7 @@
 package com.easyimmo.common;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -27,6 +29,7 @@ import com.easyimmo.incomes.dto.IncomeDetails;
 import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.incomes.model.Income;
 import com.easyimmo.incomes.service.IncomeService;
+import com.easyimmo.property.dto.PropertyDetails;
 import com.easyimmo.property.dto.PropertyDto;
 import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
@@ -213,6 +216,42 @@ class ConverterUTest {
         Assertions.assertEquals(expected.getName(),result.getName());
         Assertions.assertEquals(expected.getAddress(),result.getAddress());
         Assertions.assertEquals(expected.getType(),result.getType());
+    }
+
+    @Test
+    @DisplayName("test to convert a property into propertyDetails")
+    @Tag("property")
+    void convertToPropertyDetailsTest() {
+        //Given
+        Property property = DemoTestData.getProperty();
+        PropertyDetails expected = DemoTestData.getPropertyDetails();
+        //When
+        Mockito.when(bankloanService.getBankLoanSummaryByProperty(property)).thenReturn(DemoTestData.getBankLoanSummary());
+        Mockito.when(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusYears(1))).thenReturn(1200);
+        Mockito.when(feeService.getTotalFeesFrom(property.getId(), LocalDate.now().minusMonths(1))).thenReturn(120);
+        Mockito.when(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusYears(1))).thenReturn(10000);
+        Mockito.when(incomeService.getTotalIncomesFrom(property.getId(), LocalDate.now().minusMonths(1))).thenReturn(800);
+        Mockito.when(feeService.getLastFees(property.getId(),5)).thenReturn(Collections.singletonList(DemoTestData.getFee()));
+        Mockito.when(incomeService.getLastIncomes(property.getId(),5)).thenReturn(Collections.singletonList(DemoTestData.getIncome()));
+        Mockito.when(reservationService.getLastReservations(property.getId(),5)).thenReturn(Collections.singletonList(DemoTestData.getReservation()));
+        PropertyDetails result = converter.convertToDetails(property);
+        //Then
+        Assertions.assertEquals(expected.getId(),result.getId());
+        Assertions.assertEquals(expected.getAddress(),result.getAddress());
+        Assertions.assertEquals(expected.getName(),result.getName());
+        Assertions.assertEquals(expected.getType(),result.getType());
+        Assertions.assertEquals(expected.getRentType(),result.getRentType());
+        Assertions.assertEquals(expected.getBuyPrice(),result.getBuyPrice());
+        Assertions.assertEquals(expected.getBankLoanSummary().getDueAmount(),result.getBankLoanSummary().getDueAmount());
+        Assertions.assertEquals(expected.getBankLoanSummary().getRefundedAmount(),result.getBankLoanSummary().getRefundedAmount());
+        Assertions.assertEquals(expected.getBankLoanSummary().getTotalAmount(),result.getBankLoanSummary().getTotalAmount());
+        Assertions.assertEquals(expected.getYearlyFees(),result.getYearlyFees());
+        Assertions.assertEquals(expected.getMonthlyFees(),result.getMonthlyFees());
+        Assertions.assertEquals(expected.getMonthlyIncomes(),result.getMonthlyIncomes());
+        Assertions.assertEquals(expected.getYearlyIncomes(),result.getYearlyIncomes());
+        Assertions.assertEquals(expected.getFees().get(0).getAmount(),result.getFees().get(0).getAmount());
+        Assertions.assertEquals(expected.getIncomes().get(0).getAmount(),result.getIncomes().get(0).getAmount());
+        Assertions.assertEquals(expected.getReservations().get(0).getFromDate(),result.getReservations().get(0).getFromDate());
     }
 
     @Test

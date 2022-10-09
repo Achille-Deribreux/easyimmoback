@@ -1,8 +1,10 @@
 package com.easyimmo;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
+import com.easyimmo.bankloan.dto.BankLoanSummary;
 import com.easyimmo.bankloan.dto.BankloanBody;
 import com.easyimmo.bankloan.dto.BankloanDetails;
 import com.easyimmo.bankloan.model.Bankloan;
@@ -14,6 +16,7 @@ import com.easyimmo.incomes.dto.IncomeBody;
 import com.easyimmo.incomes.dto.IncomeDetails;
 import com.easyimmo.incomes.dto.IncomeSummary;
 import com.easyimmo.incomes.model.Income;
+import com.easyimmo.property.dto.PropertyDetails;
 import com.easyimmo.property.dto.PropertyDto;
 import com.easyimmo.property.dto.PropertySummary;
 import com.easyimmo.property.model.Property;
@@ -100,6 +103,24 @@ public class DemoTestData {
                 .address("75 test street belgium")
                 .name("test property name")
                 .type(Property.Type.APPARTMENT);
+    }
+
+    public static PropertyDetails getPropertyDetails(){
+        return new PropertyDetails()
+                .id(1)
+                .address("75 test street belgium")
+                .name("test property name")
+                .type("APPARTMENT")
+                .rentType("LONG")
+                .buyPrice(120000)
+                .bankLoanSummary(getBankLoanSummary())
+                .yearlyFees(1200)
+                .yearlyIncomes(10000)
+                .monthlyFees(120)
+                .monthlyIncomes(800)
+                .fees(Collections.singletonList(getFeeSummary()))
+                .incomes(Collections.singletonList(getIncomeSummary()))
+                .reservations(Collections.singletonList(getReservationSummary()));
     }
 
     /**
@@ -220,5 +241,13 @@ public class DemoTestData {
                 .monthlyPayment(41667L)
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusYears(20));
+    }
+
+    public static BankLoanSummary getBankLoanSummary(){
+        return new BankLoanSummary()
+                .totalAmount(10000000L)
+                .dueAmount(4000000L)
+                .refundedAmount(6000000L);
+
     }
 }

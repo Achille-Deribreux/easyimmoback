@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easyimmo.common.utils.Converter;
+import com.easyimmo.property.service.PropertyService;
 import com.easyimmo.reservation.dto.ReservationBody;
 import com.easyimmo.reservation.dto.ReservationCriteria;
 import com.easyimmo.reservation.dto.ReservationDetails;
@@ -32,9 +33,12 @@ public class ReservationController {
 
     private final Converter converter;
 
-    public ReservationController(ReservationService reservationService, Converter converter) {
+    private final PropertyService propertyService;
+
+    public ReservationController(ReservationService reservationService, Converter converter, PropertyService propertyService) {
         this.reservationService = reservationService;
         this.converter = converter;
+        this.propertyService = propertyService;
     }
 
     private final Logger logger = LoggerFactory.getLogger(ReservationController.class);
@@ -64,14 +68,13 @@ public class ReservationController {
             @RequestParam(value="pageSize",required=false)Integer pageSize
     ) {
         logger.info("get request received at reservation/getAll");
-        ReservationCriteria criteria = converter.convertToReservationCriteria(
-                propertyId,
-                fromDate,
-                toDate,
-                reservationDate,
-                pageNr,
-                pageSize
-        );
+        ReservationCriteria criteria =  new ReservationCriteria()
+                .property(propertyId!=null?  propertyService.getById(propertyId):null)
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .reservationDate(reservationDate)
+                .pageSize(pageSize)
+                .pageNumber(pageNr);
         List<Reservation> reservationsList = reservationService.getAll(criteria);
         return new ResponseEntity<>(converter.convertListToReservationSummary(reservationsList), HttpStatus.OK);
     }
